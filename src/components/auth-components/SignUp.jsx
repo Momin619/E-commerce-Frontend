@@ -37,7 +37,7 @@ function SignUp() {
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       } else {
-        setErrors(["Unexpeceted error occured"]);
+        setErrors(["Unexpeceted error occured !"]);
       }
     } finally {
       setLoading(false);
