@@ -56,7 +56,9 @@ function ProductDetails() {
       <div className="h-64 sm:h-80 md:h-full bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
         {product.productImage && (
           <img
-            src={`${import.meta.env.VITE_API_BASE_URL}${product.productImage}`}
+            src={`https://e-commerce-backend-production-abe1.up.railway.app${
+              product.productImage?.startsWith("/") ? "" : "/"
+            }${product.productImage}`}
             alt={product.productName}
             className="object-cover w-full h-full"
           />
