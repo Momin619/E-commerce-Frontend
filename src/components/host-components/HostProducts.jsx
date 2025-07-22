@@ -30,6 +30,7 @@ function HostProducts() {
           credentials: "include",
         }
       );
+
       const data = await res.json();
       console.log(data.message);
       setProducts((prev) =>
