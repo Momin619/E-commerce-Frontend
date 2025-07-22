@@ -24,7 +24,7 @@ function HostProducts() {
     try {
       setLoading(true);
       const res = await fetch(
-        `http://localhost:3000/host/delete-product/${productId}`,
+        `https://e-commerce-backend-production-abe1.up.railway.app/host/delete-product/${productId}`,
         {
           method: "DELETE",
           credentials: "include",
