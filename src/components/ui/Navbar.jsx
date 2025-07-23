@@ -56,8 +56,8 @@ function Navbar() {
         onClick={onLogout}
         className={`${
           mobile
-            ? "block cursor-pointer w-fit text-red-600 px-4 py-2 rounded hover:bg-red-100"
-            : "text-red-600 border cursor-pointer border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+            ? "block  cursor-pointer w-full text-left text-red-600 bg-red-50 px-4 py-2 rounded hover:bg-red-100"
+            : "text-red-600 border  cursor-pointer border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
         }`}
       >
         Logout
@@ -95,8 +95,8 @@ function Navbar() {
         onClick={onLogout}
         className={`${
           mobile
-            ? "block w-fit cursor-pointer text-red-600 px-4 py-2 rounded hover:bg-red-100"
-            : "text-red-600 border cursor-pointer border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+            ? "block w-full text-left cursor-pointer  text-red-600 bg-red-50 px-4 py-2 rounded hover:bg-red-100"
+            : "text-red-600 border  cursor-pointer border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
         }`}
       >
         Logout
