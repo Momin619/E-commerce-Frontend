@@ -26,40 +26,62 @@ function Navbar() {
     }
   };
 
-  const renderUserLinks = () => (
+  const renderUserLinks = (mobile = false) => (
     <>
-      <a href="/products" className="text-gray-600 hover:text-blue-600">
+      <a
+        href="/products"
+        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+      >
         Products
       </a>
-      <a href="/favourites" className="text-gray-600 hover:text-blue-600">
+      <a
+        href="/favourites"
+        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+      >
         Favourites
       </a>
-      <a href="/profile" className="text-gray-600 hover:text-blue-600">
+      <a
+        href="/profile"
+        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+      >
         Profile
       </a>
       <button
         onClick={onLogout}
-        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
+        className={`${
+          mobile ? "block w-full text-left" : ""
+        } bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200`}
       >
         Logout
       </button>
     </>
   );
 
-  const renderHostLinks = () => (
+  const renderHostLinks = (mobile = false) => (
     <>
-      <a href="/host/products" className="text-gray-600 hover:text-blue-600">
+      <a
+        href="/host/products"
+        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+      >
         Host Products
       </a>
-      <a href="/host/add-product" className="text-gray-600 hover:text-blue-600">
+      <a
+        href="/host/add-product"
+        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+      >
         Add Product
       </a>
-      <a href="/profile" className="text-gray-600 hover:text-blue-600">
+      <a
+        href="/profile"
+        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+      >
         Profile
       </a>
       <button
         onClick={onLogout}
-        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
+        className={`${
+          mobile ? "block w-full text-left" : ""
+        } bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200`}
       >
         Logout
       </button>
@@ -69,15 +91,19 @@ function Navbar() {
   return (
     <>
       {loading && <Loading />}
-
-      <nav className="bg-white shadow-md">
+      <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="text-xl font-bold text-blue-600">E-commerce</div>
+            <div
+              className="text-xl font-bold text-blue-600 cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              E-commerce
+            </div>
 
-            {/* Desktop Links */}
-            <div className="hidden md:flex items-center space-x-6">
+            {/* Desktop Menu */}
+            <div className="hidden md:flex space-x-6 items-center">
               {isLogin ? (
                 user.userType === "host" ? (
                   renderHostLinks()
@@ -102,7 +128,7 @@ function Navbar() {
               )}
             </div>
 
-            {/* Mobile Toggle */}
+            {/* Mobile Toggle Button */}
             <div className="md:hidden">
               <button
                 onClick={toggleMenu}
@@ -128,12 +154,12 @@ function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden px-4 pb-4 space-y-2">
+          <div className="md:hidden px-4 pb-4 pt-2 space-y-2 bg-white shadow-sm">
             {isLogin ? (
               user.userType === "host" ? (
-                renderHostLinks()
+                renderHostLinks(true)
               ) : (
-                renderUserLinks()
+                renderUserLinks(true)
               )
             ) : (
               <>
