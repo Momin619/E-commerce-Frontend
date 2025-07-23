@@ -141,7 +141,12 @@ function Navbar() {
                   >
                     Favourites
                   </a>
-                  <a href={`/profile`}>Profile</a>
+                  <a
+                    href={`/profile`}
+                    className="block text-gray-600 hover:text-blue-600"
+                  >
+                    Profile
+                  </a>
                   <button
                     onClick={onLogout}
                     className="w-20 text-left bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
