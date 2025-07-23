@@ -13,6 +13,7 @@ import {
 // ui components
 
 import Navbar from "./components/ui/Navbar";
+import Profile from "./components/ui/Profile";
 
 // host components
 import AddProduct from "./components/host-components/AddProduct";
@@ -80,6 +81,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Host-specific routes */}
         <Route path="/host/add-product" element={<AddProduct />} />

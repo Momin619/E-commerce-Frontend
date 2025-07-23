@@ -22,6 +22,7 @@ function Navbar() {
       setLoading(false);
     }
   };
+
   return (
     <>
       {loading && <Loading />}
