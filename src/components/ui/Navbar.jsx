@@ -91,7 +91,6 @@ function Navbar() {
   return (
     <>
       {loading && <Loading />}
-      <h1 className="text-3xl text-green-500">🚀 LIVE TEST CHANGE</h1>
 
       <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,7 +100,7 @@ function Navbar() {
               className="text-xl font-bold text-blue-600 cursor-pointer"
               onClick={() => navigate("/")}
             >
-              E-commerce v2 vercel
+              E-commerce
             </div>
 
             {/* Desktop Menu */}
