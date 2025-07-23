@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run start\" \"npm run tailwind\"",
+    "dev": "concurrently \"vite\" \"npm run tailwind\"",
     "start": "serve -s dist",
     "tailwind": "npx @tailwindcss/cli -i ./public/input.css -o ./src/output.css --watch",
     "build": "npm run tailwind:build && vite build",

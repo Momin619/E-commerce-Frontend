@@ -55,6 +55,7 @@ function Navbar() {
                     >
                       Logout
                     </button>
+                    <a href={`/profile`}>Profile</a>
                   </>
                 ) : user.userType === "host" ? (
                   <>
@@ -76,6 +77,7 @@ function Navbar() {
                     >
                       Logout
                     </button>
+                    <a href={`/profile`}>Profile</a>
                   </>
                 ) : null
               ) : (

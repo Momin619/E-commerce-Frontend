@@ -1,7 +1,8 @@
+// frontend/src/api/axios.js
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://e-commerce-backend-production-abe1.up.railway.app",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
