@@ -99,7 +99,7 @@ function Navbar() {
               className="text-xl font-bold text-blue-600 cursor-pointer"
               onClick={() => navigate("/")}
             >
-              E-commerce
+              E-commerce v2 vercel
             </div>
 
             {/* Desktop Menu */}
