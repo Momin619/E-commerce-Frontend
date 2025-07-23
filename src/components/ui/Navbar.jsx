@@ -163,13 +163,13 @@ function Navbar() {
                   >
                     Add Product
                   </a>
+                  <a href={`/profile`}>Profile</a>
                   <button
                     onClick={onLogout}
                     className="w-full text-left bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
                   >
                     Logout
                   </button>
-                  <a href={`/profile`}>Profile</a>
                 </>
               ) : null
             ) : (
