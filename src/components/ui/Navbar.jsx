@@ -30,27 +30,35 @@ function Navbar() {
     <>
       <a
         href="/products"
-        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
       >
         Products
       </a>
       <a
         href="/favourites"
-        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
       >
         Favourites
       </a>
       <a
         href="/profile"
-        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
       >
         Profile
       </a>
       <button
         onClick={onLogout}
         className={`${
-          mobile ? "block w-full text-left" : ""
-        } bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200`}
+          mobile
+            ? "block w-fit text-red-600 px-4 py-2 rounded hover:bg-red-100"
+            : "text-red-600 border border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+        }`}
       >
         Logout
       </button>
@@ -61,27 +69,35 @@ function Navbar() {
     <>
       <a
         href="/host/products"
-        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
       >
         Host Products
       </a>
       <a
         href="/host/add-product"
-        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
       >
         Add Product
       </a>
       <a
         href="/profile"
-        className={`${mobile ? "block" : ""} text-gray-600 hover:text-blue-600`}
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
       >
         Profile
       </a>
       <button
         onClick={onLogout}
         className={`${
-          mobile ? "block w-full text-left" : ""
-        } bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200`}
+          mobile
+            ? "block w-fit text-red-600 px-4 py-2 rounded hover:bg-red-100"
+            : "text-red-600 border border-red-600 px-3 py-1 rounded hover:bg-red-600 hover:text-white transition"
+        }`}
       >
         Logout
       </button>
@@ -155,7 +171,7 @@ function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden px-4 pb-4 pt-2 space-y-2 bg-white shadow-sm">
+          <div className="absolute right-4 mt-2 bg-white shadow-md rounded px-4 py-2 w-fit space-y-1 z-50">
             {isLogin ? (
               user.userType === "host" ? (
                 renderHostLinks(true)
@@ -166,13 +182,13 @@ function Navbar() {
               <>
                 <a
                   href="/signup"
-                  className="block text-gray-600 hover:text-blue-600"
+                  className="block text-gray-600 hover:text-blue-600 py-2"
                 >
                   Signup
                 </a>
                 <a
                   href="/login"
-                  className="block text-gray-600 hover:text-blue-600"
+                  className="block text-gray-600 hover:text-blue-600 py-2"
                 >
                   Login
                 </a>
