@@ -24,7 +24,7 @@ function Login() {
     }));
   };
 
-  const handleOnSumbit = async (e) => {
+  const handleOnSubmit = async (e) => {
     setLoading(true);
     try {
       e.preventDefault();
@@ -65,7 +65,7 @@ function Login() {
               action="/login"
               method="POST"
               className="space-y-5"
-              onSubmit={handleOnSumbit}
+              onSubmit={handleOnSubmit}
             >
               <div>
                 <label

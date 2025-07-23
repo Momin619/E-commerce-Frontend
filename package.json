@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm run tailwind\"",
+    "dev": "cross-env NODE_ENV=development concurrently \"vite\" \"npm run tailwind\"",
+    "build": "npm run tailwind:build && cross-env NODE_ENV=production vite build",
     "start": "serve -s dist",
     "tailwind": "npx @tailwindcss/cli -i ./public/input.css -o ./src/output.css --watch",
-    "build": "npm run tailwind:build && vite build",
     "tailwind:build": "npx @tailwindcss/cli -i ./public/input.css -o ./src/output.css"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.30.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
