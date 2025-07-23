@@ -141,13 +141,13 @@ function Navbar() {
                   >
                     Favourites
                   </a>
+                  <a href={`/profile`}>Profile</a>
                   <button
                     onClick={onLogout}
                     className="w-20 text-left bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
                   >
                     Logout
                   </button>
-                  <a href={`/profile`}>Profile</a>
                 </>
               ) : user.userType === "host" ? (
                 <>
