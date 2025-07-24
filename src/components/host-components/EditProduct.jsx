@@ -211,6 +211,7 @@ function EditProduct() {
             <img
               src={product.imageUrl}
               alt="Product"
+              loading="lazy"
               className="w-32 rounded shadow-md"
             />
           </div>

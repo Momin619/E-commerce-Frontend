@@ -61,6 +61,7 @@ function ProductDetails() {
             }${product.productImage}`}
             alt={product.productName}
             className="object-cover w-full h-full"
+            loading="lazy"
           />
         )}
       </div>

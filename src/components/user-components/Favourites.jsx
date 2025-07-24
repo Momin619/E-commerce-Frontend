@@ -51,6 +51,7 @@ function Favourites() {
                 }${favourite.productImage}`}
                 alt={favourite.productName}
                 className="object-cover w-full h-full"
+                loading="lazy"
               />
             </div>
 

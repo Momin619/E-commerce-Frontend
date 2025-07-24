@@ -94,6 +94,7 @@ function Products() {
                   }${product.productImage}`}
                   alt={product.productName}
                   className="w-full h-48 object-cover"
+                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
