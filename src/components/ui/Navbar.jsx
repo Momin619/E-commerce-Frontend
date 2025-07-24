@@ -52,6 +52,7 @@ function Navbar() {
       >
         Profile
       </a>
+      <a href="/cart">Cart</a>
       <button
         onClick={onLogout}
         className={`${

@@ -14,7 +14,7 @@ import {
 
 import Navbar from "./components/ui/Navbar";
 import Profile from "./components/ui/Profile";
-
+import Cart from "./components/ui/Cart";
 // host components
 import AddProduct from "./components/host-components/AddProduct";
 import HostProducts from "./components/host-components/HostProducts";
@@ -82,6 +82,7 @@ function App() {
         <Route path="/" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/cart" element={<Cart />} />
 
         {/* Host-specific routes */}
         <Route path="/host/add-product" element={<AddProduct />} />

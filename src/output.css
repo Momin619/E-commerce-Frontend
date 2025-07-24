@@ -7,12 +7,14 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-50: oklch(97.1% 0.013 17.38);
     --color-red-100: oklch(93.6% 0.032 17.717);
     --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
     --color-red-700: oklch(50.5% 0.213 27.518);
     --color-green-600: oklch(62.7% 0.194 149.214);
+    --color-green-700: oklch(52.7% 0.154 150.069);
     --color-blue-100: oklch(93.2% 0.032 255.585);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
@@ -35,6 +37,7 @@
     --container-xl: 36rem;
     --container-2xl: 42rem;
     --container-3xl: 48rem;
+    --container-4xl: 56rem;
     --container-7xl: 80rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
@@ -281,6 +284,9 @@
   .mb-24 {
     margin-bottom: calc(var(--spacing) * 24);
   }
+  .ml-2 {
+    margin-left: calc(var(--spacing) * 2);
+  }
   .block {
     display: block;
   }
@@ -293,6 +299,9 @@
   .hidden {
     display: none;
   }
+  .h-4 {
+    height: calc(var(--spacing) * 4);
+  }
   .h-6 {
     height: calc(var(--spacing) * 6);
   }
@@ -304,6 +313,9 @@
   }
   .h-24 {
     height: calc(var(--spacing) * 24);
+  }
+  .h-32 {
+    height: calc(var(--spacing) * 32);
   }
   .h-48 {
     height: calc(var(--spacing) * 48);
@@ -322,6 +334,9 @@
   }
   .min-h-screen {
     min-height: 100vh;
+  }
+  .w-4 {
+    width: calc(var(--spacing) * 4);
   }
   .w-6 {
     width: calc(var(--spacing) * 6);
@@ -350,6 +365,9 @@
   .w-full {
     width: 100%;
   }
+  .max-w-4xl {
+    max-width: var(--container-4xl);
+  }
   .max-w-7xl {
     max-width: var(--container-7xl);
   }
@@ -358,6 +376,12 @@
   }
   .max-w-xl {
     max-width: var(--container-xl);
+  }
+  .flex-1 {
+    flex: 1;
+  }
+  .flex-shrink-0 {
+    flex-shrink: 0;
   }
   .flex-grow {
     flex-grow: 1;
@@ -387,6 +411,9 @@
   .flex-col {
     flex-direction: column;
   }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
   .items-center {
     align-items: center;
   }
@@ -396,8 +423,14 @@
   .justify-center {
     justify-content: center;
   }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
+  }
+  .gap-4 {
+    gap: calc(var(--spacing) * 4);
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
@@ -456,6 +489,10 @@
     border-style: var(--tw-border-style);
     border-width: 4px;
   }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
   .border-blue-500 {
     border-color: var(--color-blue-500);
   }
@@ -480,11 +517,17 @@
   .bg-gray-200 {
     background-color: var(--color-gray-200);
   }
+  .bg-green-600 {
+    background-color: var(--color-green-600);
+  }
   .bg-indigo-100 {
     background-color: var(--color-indigo-100);
   }
   .bg-indigo-600 {
     background-color: var(--color-indigo-600);
+  }
+  .bg-red-50 {
+    background-color: var(--color-red-50);
   }
   .bg-red-100 {
     background-color: var(--color-red-100);
@@ -500,6 +543,9 @@
   }
   .object-cover {
     object-fit: cover;
+  }
+  .p-1 {
+    padding: calc(var(--spacing) * 1);
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
@@ -534,6 +580,9 @@
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
   }
@@ -545,6 +594,9 @@
   }
   .text-left {
     text-align: left;
+  }
+  .text-right {
+    text-align: right;
   }
   .text-2xl {
     font-size: var(--text-2xl);
@@ -646,6 +698,20 @@
       }
     }
   }
+  .hover\:bg-gray-300 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-300);
+      }
+    }
+  }
+  .hover\:bg-green-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-green-700);
+      }
+    }
+  }
   .hover\:bg-indigo-700 {
     &:hover {
       @media (hover: hover) {
@@ -726,6 +792,11 @@
       height: calc(var(--spacing) * 80);
     }
   }
+  .sm\:w-32 {
+    @media (width >= 40rem) {
+      width: calc(var(--spacing) * 32);
+    }
+  }
   .sm\:w-\[85\%\] {
     @media (width >= 40rem) {
       width: 85%;
@@ -780,6 +851,11 @@
       }
     }
   }
+  .sm\:p-6 {
+    @media (width >= 40rem) {
+      padding: calc(var(--spacing) * 6);
+    }
+  }
   .sm\:p-8 {
     @media (width >= 40rem) {
       padding: calc(var(--spacing) * 8);
@@ -793,6 +869,11 @@
   .sm\:py-8 {
     @media (width >= 40rem) {
       padding-block: calc(var(--spacing) * 8);
+    }
+  }
+  .sm\:text-left {
+    @media (width >= 40rem) {
+      text-align: left;
     }
   }
   .sm\:text-2xl {
