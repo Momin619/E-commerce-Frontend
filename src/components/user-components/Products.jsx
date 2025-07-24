@@ -126,7 +126,7 @@ function Products() {
                     </a>
 
                     <button
-                      className="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700"
+                      className="bg-red-600 cursor-pointer text-white px-5 py-2 rounded-md hover:bg-red-700"
                       onClick={() => handleAddFavouriteProduct(product._id)}
                     >
                       Favourites

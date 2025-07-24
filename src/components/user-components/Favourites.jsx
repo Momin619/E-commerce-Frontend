@@ -68,7 +68,7 @@ function Favourites() {
               </p>
               <button
                 onClick={() => handleRemoveFavourite(favourite._id)}
-                className="mt-4 px-4 py-2 bg-red-500 cursor-pointer text-white rounded hover:bg-red-600 transition"
+                className="mt-4  px-4 py-2 bg-red-500 cursor-pointer text-white rounded hover:bg-red-600 transition"
               >
                 Remove from Favourites
               </button>
