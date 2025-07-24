@@ -89,7 +89,9 @@ function Products() {
             >
               {product.productImage ? (
                 <img
-                  src={`https://e-commerce-backend-production-abe1.up.railway.app${product.productImage}`}
+                  src={`https://e-commerce-backend-production-abe1.up.railway.app${
+                    product.productImage?.startsWith("/") ? "" : "/"
+                  }${product.productImage}`}
                   alt={product.productName}
                   className="w-full h-48 object-cover"
                 />
