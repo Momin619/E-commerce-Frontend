@@ -5,17 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../store/User";
 import ValidationErrors from "../validation-component/ValidationErrors";
 import Loading from "../loading-component/Loading";
+import SuccessMessage from "../ui/SuccessMessage";
+
 function Login() {
   const { setUser, setIsLoggedIn } = useUser();
   const [loading, setLoading] = useState(null);
   const navigate = useNavigate();
   const [errors, setErrors] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [successMessageText, setSuccessMessageText] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -30,18 +33,18 @@ function Login() {
       e.preventDefault();
       const response = await api.post("/login", formData);
       const user = response.data.user;
-      console.log(response.data);
-      console.log(`User data : `, user);
       setUser(user);
       setIsLoggedIn(response.data.isLoggedIn);
       const { redirectTo } = response.data;
-      navigate(redirectTo);
+      setSuccessMessageText("Login Successful");
+      setTimeout(() => {
+        navigate(redirectTo);
+      }, 3100);
     } catch (error) {
-      console.log(error);
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       } else {
-        setErrors(["Unexpected error occured !"]);
+        setErrors(["Unexpected error occurred!"]);
       }
     } finally {
       setLoading(false);
@@ -53,7 +56,7 @@ function Login() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 ">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
           <div className="bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl block mb-24">
             <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
               Login
@@ -115,6 +118,17 @@ function Login() {
                 Login
               </button>
             </form>
+
+            {/* Success Message (conditionally visible but doesn't affect layout size) */}
+            {successMessageText && (
+              <div className="mt-4">
+                <SuccessMessage
+                  message={successMessageText}
+                  onClose={() => setSuccessMessageText("")}
+                  duration={3000}
+                ></SuccessMessage>
+              </div>
+            )}
           </div>
         </div>
       )}

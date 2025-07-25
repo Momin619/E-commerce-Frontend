@@ -2,7 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import api from "../../api/api";
 import Loading from "../loading-component/Loading";
+import SuccessMessage from "../ui/SuccessMessage";
 function Favourites() {
+  const [successMessageText, setSuccessMessageText] = useState("");
   const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(null);
   const fetchFavouriteProducts = async () => {
@@ -26,17 +28,26 @@ function Favourites() {
   }, []);
 
   const handleRemoveFavourite = async (id) => {
+    setLoading(true);
     try {
       await api.delete(`remove-favourite/favourite/${id}`);
       setFavourites((prev) => prev.filter((fav) => fav._id !== id));
+      setSuccessMessageText("Removed from favourites");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   if (loading) return <Loading />;
   return (
     <>
+      <SuccessMessage
+        message={successMessageText}
+        onClose={() => setSuccessMessageText("")}
+        duration={2500}
+      ></SuccessMessage>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
         {favourites.map((favourite) => (
           <div

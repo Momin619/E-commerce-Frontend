@@ -6,10 +6,10 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./store/User";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <UserProvider>
+    <UserProvider>
+      <BrowserRouter>
         <App />
-      </UserProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </UserProvider>
   </StrictMode>
 );

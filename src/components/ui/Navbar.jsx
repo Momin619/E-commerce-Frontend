@@ -150,7 +150,7 @@ function Navbar() {
             <div className="md:hidden">
               <button
                 onClick={toggleMenu}
-                className="text-gray-600 hover:text-blue-600 focus:outline-none"
+                className="text-gray-600 hover:text-blue-600 cursor-pointer focus:outline-none"
               >
                 <svg
                   className="h-6 w-6"

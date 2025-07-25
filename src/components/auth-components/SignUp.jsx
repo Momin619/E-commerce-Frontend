@@ -4,12 +4,14 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import ValidationErrors from "../validation-component/ValidationErrors";
 import { useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
+import SuccessMessage from "../ui/SuccessMessage";
 function SignUp() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(null);
+  const [successMessageText, setSuccessMessageText] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,7 +34,10 @@ function SignUp() {
     try {
       e.preventDefault();
       await api.post("/signup", formData);
-      navigate("/login");
+      setSuccessMessageText("Signup Successfull");
+      setTimeout(() => {
+        navigate("/login"); // redirect after showing message
+      }, 3100);
     } catch (error) {
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
@@ -50,6 +55,11 @@ function SignUp() {
         <Loading />
       ) : (
         <>
+          <SuccessMessage
+            message={successMessageText}
+            onClose={() => setSuccessMessageText("")}
+            duration={3000}
+          ></SuccessMessage>
           <ValidationErrors errors={errors}></ValidationErrors>
 
           <div

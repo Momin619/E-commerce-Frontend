@@ -15,6 +15,7 @@ import {
 import Navbar from "./components/ui/Navbar";
 import Profile from "./components/ui/Profile";
 import Cart from "./components/ui/Cart";
+import Error from "./components/error-component/Error";
 // host components
 import AddProduct from "./components/host-components/AddProduct";
 import HostProducts from "./components/host-components/HostProducts";
@@ -26,7 +27,7 @@ import Products from "./components/user-components/Products";
 import ProductDetails from "./components/user-components/ProductDetails";
 import Favourites from "./components/user-components/Favourites";
 // react states
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "./store/User";
 
 // axios instance
@@ -35,41 +36,30 @@ function App() {
   const redirect = useNavigate();
   const location = useLocation();
   const { setUser, setIsLoggedIn } = useUser();
-
+  const [loading, setLoading] = useState(true);
   const publicRoutes = ["/login", "/signup"];
-  const checkSession = async () => {
-    try {
-      const res = await api.get("/me");
-      const currentPath = location.pathname;
-
-      if (!res.data.isLoggedIn && !res.data.user) {
-        // If user is not logged in and current route is NOT public, redirect
-        if (!publicRoutes.includes(currentPath)) {
-          redirect("/login");
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    checkSession();
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
+    const fetchSession = async () => {
       try {
         const res = await api.get("/me");
-        setUser(res.data.user);
-        setIsLoggedIn(res.data.isLoggedIn);
+        const { user, isLoggedIn } = res.data;
+        setUser(user);
+        setIsLoggedIn(isLoggedIn);
+
+        if (!isLoggedIn && !publicRoutes.includes(location.pathname)) {
+          redirect("/login");
+        }
       } catch (err) {
-        console.error(err);
+        console.error("Session error:", err);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchUser();
-  }, []);
 
+    fetchSession();
+  }, [location.pathname]);
+  if (loading)
+    return <div className="p-10 text-center">Loading session...</div>;
   return (
     <>
       {/* Navigation bar */}
@@ -99,6 +89,7 @@ function App() {
           element={<ProductDetails />}
         />
         <Route path="/favourites" element={<Favourites />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );

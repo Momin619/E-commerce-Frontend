@@ -1,12 +1,12 @@
 import api from "../../api/api";
 import { useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import ValidationErrors from "../validation-component/ValidationErrors";
+
+import SuccessMessage from "../ui/SuccessMessage";
 import { useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
 function AddProduct() {
   const navigate = useNavigate();
-
+  const [successMessageText, setSuccessMessageText] = useState("");
   const [loading, setLoading] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -56,7 +56,10 @@ function AddProduct() {
       });
 
       console.log("Upload success", response.data);
-      navigate("/host/products");
+      setSuccessMessageText("Product Added ");
+      setTimeout(() => {
+        navigate("/host/products"); // redirect after showing message
+      }, 3100);
     } catch (err) {
       console.error("Upload failed", err);
       alert("Upload failed. Check console.");
@@ -71,6 +74,12 @@ function AddProduct() {
         <Loading />
       ) : (
         <>
+          <SuccessMessage
+            message={successMessageText}
+            onClose={() => setSuccessMessageText("")}
+            duration={3000}
+          ></SuccessMessage>
+
           <div
             className="bg-white px-4 py-6 sm:px-6 sm:py-8 md:px-10 md:py-10 rounded-2xl shadow-xl border mx-auto my-6
                 w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%]"
