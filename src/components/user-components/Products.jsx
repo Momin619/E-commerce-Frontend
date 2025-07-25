@@ -40,24 +40,15 @@ function Products() {
   };
 
   const handleAddToCart = async (id) => {
+    console.log("Product ids from handle add to cart is ", id);
     try {
       setLoading(true);
 
       // Get product list and find product by id
-      const response = await api.get("/products");
-      const products = response.data.products;
-      const product = products.find((p) => p._id === id);
-      console.log(product);
-      if (!product) {
-        alert("Product not found.");
-        return;
-      }
 
       // Post to cart with full product info
       const res = await api.post(`/add-to-cart/cart-item/${id}`, {
-        name: product.productName,
-        price: product.productPrice,
-        image: product.productImage,
+        productId: id,
       });
 
       alert("Added to cart!");
