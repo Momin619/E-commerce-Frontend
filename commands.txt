@@ -1,0 +1,6 @@
+git add . 
+git commit -m ''
+git push -u origin Main
+npm run build
+git commit --allow-empty -m "Force redeploy"
+git push

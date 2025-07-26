@@ -11,6 +11,7 @@
     "tailwind:build": "npx @tailwindcss/cli -i ./public/input.css -o ./src/output.css"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^7.6.1",
     "@tailwindcss/cli": "^4.1.11",
     "axios": "^1.10.0",
     "concurrently": "^9.2.0",

@@ -2,20 +2,19 @@ import { useEffect, useState } from "react";
 import api from "../../api/api";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Loading from "../loading-component/Loading";
+import { loadStripe } from "@stripe/stripe-js";
 
 function Cart() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
 
   const fetchCart = async () => {
     setLoading(true);
     try {
       const res = await api.get("/cart");
       const cartItems = res.data.cartItems || [];
-
-      // Filter out items where productId is null (deleted products)
       const filteredCart = cartItems.filter((item) => item.productId !== null);
-
       setCart(filteredCart);
     } catch (err) {
       console.error("Error fetching cart:", err);
@@ -62,6 +61,36 @@ function Cart() {
       sum + (item.productId?.productPrice || 0) * (item.quantity || 0),
     0
   );
+
+  const makePayment = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    const body = {
+      products: cart, // Your cart state
+    };
+
+    const response = await fetch(
+      "http://localhost:3000/create-checkout-session",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await response.json();
+
+    const stripe = await loadStripe(import.meta.env.VITE_STRIPE_KEY);
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error.message);
+    }
+  };
 
   return (
     <div className="p-4 sm:p-6 max-w-4xl mx-auto">
@@ -132,6 +161,15 @@ function Cart() {
           {/* Total Amount */}
           <div className="text-right mt-6">
             <h3 className="text-2xl font-bold">Total: ${total.toFixed(2)}</h3>
+            <button
+              onClick={makePayment}
+              disabled={isPaying || cart.length === 0}
+              className={`bg-blue-500 my-10 text-white p-2 rounded cursor-pointer ${
+                isPaying ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+            >
+              {isPaying ? "Processing..." : `Pay $${total.toFixed(2)}`}
+            </button>
           </div>
         </>
       )}
