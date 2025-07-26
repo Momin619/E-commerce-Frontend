@@ -26,28 +26,30 @@ function Login() {
       [name]: value,
     }));
   };
-
   const handleOnSubmit = async (e) => {
-    setLoading(true);
+    e.preventDefault();
+    setLoading(true); // Start loading only during the API call
     try {
-      e.preventDefault();
       const response = await api.post("/login", formData);
       const user = response.data.user;
       setUser(user);
       setIsLoggedIn(response.data.isLoggedIn);
       const { redirectTo } = response.data;
+
       setSuccessMessageText("Login Successful");
+      setLoading(false); // Stop loading immediately after success
+
+      // Wait 3 seconds, then redirect
       setTimeout(() => {
         navigate(redirectTo);
-      }, 3100);
+      }, 3000);
     } catch (error) {
+      setLoading(false); // Stop loading on error too
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       } else {
         setErrors(["Unexpected error occurred!"]);
       }
-    } finally {
-      setLoading(false);
     }
   };
 

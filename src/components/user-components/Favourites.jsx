@@ -14,7 +14,9 @@ function Favourites() {
       // console.log("Response is ", response);
       // setFavourites);
       const favourites = response.data.user.favourites;
-      console.log(favourites);
+      // if(favourites)
+      const filteredFavourites = favourites.filter((fav) => fav._id !== null);
+      console.log(filteredFavourites);
       setFavourites(favourites);
     } catch (error) {
       console.log(error);

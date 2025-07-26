@@ -11,7 +11,12 @@ function Cart() {
     setLoading(true);
     try {
       const res = await api.get("/cart");
-      setCart(res.data.cartItems || []);
+      const cartItems = res.data.cartItems || [];
+
+      // Filter out items where productId is null (deleted products)
+      const filteredCart = cartItems.filter((item) => item.productId !== null);
+
+      setCart(filteredCart);
     } catch (err) {
       console.error("Error fetching cart:", err);
     } finally {
