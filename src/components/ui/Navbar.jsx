@@ -3,7 +3,7 @@ import { useState } from "react";
 import api from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
-
+import { Link } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
   const { isLogin, user, setUser, setIsLoggedIn } = useUser();
@@ -92,6 +92,13 @@ function Navbar() {
       >
         Profile
       </a>
+
+      {user?.userType === "host" && (
+        <Link to="/connect-stripe" className="text-blue-600 underline">
+          Connect Stripe
+        </Link>
+      )}
+
       <button
         onClick={onLogout}
         className={`${

@@ -2,6 +2,10 @@
 
 import SignUp from "./components/auth-components/SignUp";
 import Login from "./components/auth-components/Login";
+// src/App.jsx or wherever you define routes
+import ConnectStripe from "./components/stripe-components/ConnectStripe";
+
+// inside your <Routes>
 
 import {
   BrowserRouter as Router,
@@ -26,6 +30,12 @@ import EditProduct from "./components/host-components/EditProduct";
 import Products from "./components/user-components/Products";
 import ProductDetails from "./components/user-components/ProductDetails";
 import Favourites from "./components/user-components/Favourites";
+
+// Stripe components
+
+import SuccessPayment from "./components/stripe-components/SuccessPayment";
+import CancelPayment from "./components/stripe-components/CancelPayment";
+
 // react states
 import { useEffect, useState } from "react";
 import { useUser } from "./store/User";
@@ -58,8 +68,7 @@ function App() {
 
     fetchSession();
   }, [location.pathname]);
-  if (loading)
-    return <div className="p-10 text-center">Loading session...</div>;
+  if (loading) return <div className="p-10 text-center"></div>;
   return (
     <>
       {/* Navigation bar */}
@@ -89,6 +98,9 @@ function App() {
           element={<ProductDetails />}
         />
         <Route path="/favourites" element={<Favourites />} />
+        <Route path="/stripe/success" element={<SuccessPayment />} />
+        <Route path="/stripe/failed" element={<CancelPayment />} />
+        <Route path="/connect-stripe" element={<ConnectStripe />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>
