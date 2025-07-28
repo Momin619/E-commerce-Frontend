@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../api/api";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import Lottie from "lottie-react";
-import successAnimation from "../../assets/success.json";
+import LottieFeedback from "../animation-component/LottieFeedback";
 import ValidationErrors from "../validation-component/ValidationErrors";
 import Loading from "../loading-component/Loading";
 import { motion } from "framer-motion";
@@ -25,11 +24,11 @@ function SignUp() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [action, setAction] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -44,7 +43,8 @@ function SignUp() {
 
     try {
       await api.post("/signup", formData);
-      setSuccess(true);
+      setAction("signup");
+      setShowAnimation(true);
       setTimeout(() => {
         navigate("/login");
       }, 1500);
@@ -61,20 +61,6 @@ function SignUp() {
 
   if (loading) return <Loading />;
 
-  if (success) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-green-50 transition-all duration-300">
-        <Lottie animationData={successAnimation} className="w-72 h-72" />
-        <h2 className="text-2xl font-semibold text-green-700 mt-4">
-          Account Created Successfully!
-        </h2>
-        <Link to="/login" className="mt-4 text-blue-600 underline">
-          Go to Login
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -82,12 +68,18 @@ function SignUp() {
       transition={{ duration: 0.5, ease: "easeInOut" }}
       className=""
     >
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-200 px-4 sm:px-6 py-10">
+      {showAnimation && action && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+          <LottieFeedback type={action} />
+        </div>
+      )}
+
+      <div className="flex items-center justify-center min-h-screen px-4 py-10 bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-200 sm:px-6">
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-md sm:max-w-lg bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl space-y-5 transition-all duration-300"
+          className="w-full max-w-md p-6 space-y-5 transition-all duration-300 bg-white shadow-2xl sm:max-w-lg sm:p-8 md:p-10 rounded-3xl"
         >
-          <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl text-gray-800 mb-4">
+          <h2 className="mb-4 text-2xl text-center text-gray-800 sm:text-3xl lg:text-4xl">
             Create an Account
           </h2>
 
@@ -102,7 +94,7 @@ function SignUp() {
               value={formData.firstName}
               onChange={handleChange}
               required
-              className="rounded-xl w-full"
+              className="w-full rounded-xl"
             />
           </div>
 
@@ -115,7 +107,7 @@ function SignUp() {
               value={formData.lastName}
               onChange={handleChange}
               required
-              className="rounded-xl w-full"
+              className="w-full rounded-xl"
             />
           </div>
 
@@ -129,12 +121,12 @@ function SignUp() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="rounded-xl w-full"
+              className="w-full rounded-xl"
             />
           </div>
 
           {/* Password */}
-          <div className="space-y-1 relative">
+          <div className="relative space-y-1">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
@@ -143,7 +135,7 @@ function SignUp() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="rounded-xl pr-10 w-full"
+              className="w-full pr-10 rounded-xl"
             />
             <span
               onClick={() => setShowPassword((prev) => !prev)}
@@ -154,7 +146,7 @@ function SignUp() {
           </div>
 
           {/* Confirm Password */}
-          <div className="space-y-1 relative">
+          <div className="relative space-y-1">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
             <Input
               id="confirmPassword"
@@ -163,7 +155,7 @@ function SignUp() {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
-              className="rounded-xl pr-10 w-full"
+              className="w-full pr-10 rounded-xl"
             />
             <span
               onClick={() => setShowConfirmPassword((prev) => !prev)}
@@ -182,7 +174,7 @@ function SignUp() {
               value={formData.userType}
               onChange={handleChange}
               required
-              className="rounded-xl w-full"
+              className="w-full rounded-xl"
             >
               <SelectItem value="">Select a type</SelectItem>
               <SelectItem value="host">Host</SelectItem>
@@ -197,11 +189,11 @@ function SignUp() {
             </Button>
           </div>
 
-          <p className="text-center text-sm text-gray-600 mt-3">
+          <p className="mt-3 text-sm text-center text-gray-600">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="text-blue-600 hover:underline font-semibold"
+              className="font-semibold text-blue-600 hover:underline"
             >
               Login
             </Link>
