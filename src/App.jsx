@@ -1,5 +1,5 @@
 // Authorization and Authentication components
-
+import "./assets/utils.css";
 import SignUp from "./components/auth-components/SignUp";
 import Login from "./components/auth-components/Login";
 // src/App.jsx or wherever you define routes

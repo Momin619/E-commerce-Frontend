@@ -77,12 +77,12 @@ function SignUp() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 px-4 sm:px-6 py-10">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white p-10 rounded-3xl shadow-2xl space-y-4 transition-all duration-300"
+        className="w-full max-w-md sm:max-w-lg bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl space-y-5 transition-all duration-300"
       >
-        <h2 className="text-4xl font-bold text-gray-800 text-center mb-4 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 text-center mb-3 sm:mb-4">
           Create an Account
         </h2>
 
@@ -97,7 +97,7 @@ function SignUp() {
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="rounded-xl"
+            className="rounded-xl w-full"
           />
         </div>
 
@@ -110,7 +110,7 @@ function SignUp() {
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="rounded-xl"
+            className="rounded-xl w-full"
           />
         </div>
 
@@ -124,7 +124,7 @@ function SignUp() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="rounded-xl"
+            className="rounded-xl w-full"
           />
         </div>
 
@@ -138,7 +138,7 @@ function SignUp() {
             value={formData.password}
             onChange={handleChange}
             required
-            className="rounded-xl pr-10"
+            className="rounded-xl pr-10 w-full"
           />
           <span
             onClick={() => setShowPassword((prev) => !prev)}
@@ -158,7 +158,7 @@ function SignUp() {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
-            className="rounded-xl pr-10"
+            className="rounded-xl pr-10 w-full"
           />
           <span
             onClick={() => setShowConfirmPassword((prev) => !prev)}
@@ -177,7 +177,7 @@ function SignUp() {
             value={formData.userType}
             onChange={handleChange}
             required
-            className="rounded-xl"
+            className="rounded-xl w-full"
           >
             <SelectItem value="">Select a type</SelectItem>
             <SelectItem value="host">Host</SelectItem>
@@ -187,10 +187,7 @@ function SignUp() {
 
         {/* Submit */}
         <div className="pt-2">
-          <Button
-            type="submit"
-            className="w-full rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
-          >
+          <Button type="submit" className="w-full py-2 px-4 btn-gradient">
             Sign Up
           </Button>
         </div>
