@@ -1,17 +1,20 @@
-import api from "../../api/api";
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import api from "../../api/api";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import Lottie from "lottie-react";
+import successAnimation from "../../assets/success.json";
 import ValidationErrors from "../validation-component/ValidationErrors";
-import { useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
-import SuccessMessage from "../ui/SuccessMessage";
+
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Select, SelectItem } from "../ui/select";
+import { Label } from "../ui/label";
+
 function SignUp() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errors, setErrors] = useState([]);
-  const [loading, setLoading] = useState(null);
-  const [successMessageText, setSuccessMessageText] = useState("");
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,7 +24,13 @@ function SignUp() {
     userType: "",
   });
 
-  const handleOnChange = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -29,194 +38,174 @@ function SignUp() {
     }));
   };
 
-  const handleOnSumbit = async (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
+    setErrors([]);
+
     try {
-      e.preventDefault();
       await api.post("/signup", formData);
-      setSuccessMessageText("Signup Successfull");
+      setSuccess(true);
       setTimeout(() => {
-        navigate("/login"); // redirect after showing message
-      }, 3100);
+        navigate("/login");
+      }, 3000);
     } catch (error) {
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       } else {
-        setErrors(["Unexpeceted error occured !"]);
+        setErrors(["Unexpected error occurred!"]);
       }
     } finally {
       setLoading(false);
     }
   };
 
+  if (loading) return <Loading />;
+
+  if (success) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-green-50 transition-all duration-300">
+        <Lottie animationData={successAnimation} className="w-72 h-72" />
+        <h2 className="text-2xl font-semibold text-green-700 mt-4">
+          Account Created Successfully!
+        </h2>
+        <Link to="/login" className="mt-4 text-blue-600 underline">
+          Go to Login
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <SuccessMessage
-            message={successMessageText}
-            onClose={() => setSuccessMessageText("")}
-            duration={3000}
-          ></SuccessMessage>
-          <ValidationErrors errors={errors}></ValidationErrors>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg bg-white p-10 rounded-3xl shadow-2xl space-y-4 transition-all duration-300"
+      >
+        <h2 className="text-4xl font-bold text-gray-800 text-center mb-4 tracking-tight">
+          Create an Account
+        </h2>
 
-          <div
-            className="bg-white px-4 py-6 sm:px-6 sm:py-8 md:px-10 md:py-10 rounded-2xl shadow-xl border mx-auto my-6
-                w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%]"
+        {errors.length > 0 && <ValidationErrors errors={errors} />}
+
+        {/* First Name */}
+        <div className="space-y-1">
+          <Label htmlFor="firstName">First Name</Label>
+          <Input
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+            className="rounded-xl"
+          />
+        </div>
+
+        {/* Last Name */}
+        <div className="space-y-1">
+          <Label htmlFor="lastName">Last Name</Label>
+          <Input
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            className="rounded-xl"
+          />
+        </div>
+
+        {/* Email */}
+        <div className="space-y-1">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="rounded-xl"
+          />
+        </div>
+
+        {/* Password */}
+        <div className="space-y-1 relative">
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="rounded-xl pr-10"
+          />
+          <span
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-3 top-[60%] transform -translate-y-1/2 text-gray-500 cursor-pointer"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-gray-800">
-              Create Account
-            </h2>
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </span>
+        </div>
 
-            <form
-              action="/signup"
-              method="POST"
-              className="space-y-4 sm:space-y-5"
-              onSubmit={handleOnSumbit}
-            >
-              {/* First Name */}
-              <div>
-                <label
-                  htmlFor="firstName"
-                  className="block text-sm font-semibold text-gray-700"
-                >
-                  First Name
-                </label>
-                <input
-                  onChange={handleOnChange}
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+        {/* Confirm Password */}
+        <div className="space-y-1 relative">
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Input
+            id="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            className="rounded-xl pr-10"
+          />
+          <span
+            onClick={() => setShowConfirmPassword((prev) => !prev)}
+            className="absolute right-3 top-[60%] transform -translate-y-1/2 text-gray-500 cursor-pointer"
+          >
+            {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+          </span>
+        </div>
 
-              {/* Last Name */}
-              <div>
-                <label
-                  htmlFor="lastName"
-                  className="block text-sm font-semibold text-gray-700"
-                >
-                  Last Name
-                </label>
-                <input
-                  onChange={handleOnChange}
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+        {/* User Type */}
+        <div className="space-y-1">
+          <Label htmlFor="userType">User Type</Label>
+          <Select
+            id="userType"
+            name="userType"
+            value={formData.userType}
+            onChange={handleChange}
+            required
+            className="rounded-xl"
+          >
+            <SelectItem value="">Select a type</SelectItem>
+            <SelectItem value="host">Host</SelectItem>
+            <SelectItem value="user">User</SelectItem>
+          </Select>
+        </div>
 
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-semibold text-gray-700"
-                >
-                  Email
-                </label>
-                <input
-                  onChange={handleOnChange}
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  required
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+        {/* Submit */}
+        <div className="pt-2">
+          <Button
+            type="submit"
+            className="w-full rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+          >
+            Sign Up
+          </Button>
+        </div>
 
-              {/* Password */}
-              <div className="relative">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-semibold text-gray-700"
-                >
-                  Password
-                </label>
-                <input
-                  onChange={handleOnChange}
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  required
-                  className="mt-1 block w-full p-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <span
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-[69%] transform -translate-y-1/2 text-gray-500 cursor-pointer"
-                >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
-                </span>
-              </div>
-
-              {/* Confirm Password */}
-              <div className="relative">
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-sm font-semibold text-gray-700"
-                >
-                  Confirm Password
-                </label>
-                <input
-                  onChange={handleOnChange}
-                  type={showConfirmPassword ? "text" : "password"}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  required
-                  className="mt-1 block w-full p-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <span
-                  onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="absolute right-3 top-[69%] transform -translate-y-1/2 text-gray-500 cursor-pointer"
-                >
-                  {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-                </span>
-              </div>
-
-              {/* User Type */}
-              <div>
-                <label
-                  htmlFor="userType"
-                  className="block text-sm font-semibold text-gray-700"
-                >
-                  User Type
-                </label>
-                <select
-                  id="userType"
-                  name="userType"
-                  required
-                  value={formData.userType}
-                  onChange={handleOnChange}
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">Select user type</option>
-                  <option value="user">User</option>
-                  <option value="host">Host</option>
-                </select>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white font-medium py-2.5 rounded-md hover:bg-blue-700 transition duration-300 cursor-pointer"
-              >
-                Sign Up
-              </button>
-            </form>
-          </div>
-        </>
-      )}
-    </>
+        <p className="text-center text-sm text-gray-600 mt-3">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-blue-600 hover:underline font-semibold"
+          >
+            Login
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 }
 

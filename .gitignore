@@ -16,6 +16,7 @@ dist-ssr/
 
 # Local env files (do not commit real secrets)
 .env
+.env.production
 .env.*.local
 *.local
 
