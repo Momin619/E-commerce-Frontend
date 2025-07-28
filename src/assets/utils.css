@@ -1,14 +1,26 @@
-.btn-gradient {
-  background: linear-gradient(#3b82f6, #6366f1, #8b5cf6);
-  background-size: 200% 100%;
-  background-position: left;
+.btn-fancy {
+  width: 100%;
+  border-radius: 0.75rem; /* rounded-xl */
+  background: linear-gradient(
+    to right,
+    #3b82f6,
+    /* blue-500 */ #6366f1,
+    /* indigo-500 */ #8b5cf6 /* purple-500 */
+  );
   color: white;
+  font-weight: 600;
+  padding: 0.625rem 1rem; /* py-2.5 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease-in-out;
+  border: none;
+  cursor: pointer;
+  font: bold;
   filter: brightness(1);
-  transition: filter 0.5s ease, box-shadow 0.5s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.btn-gradient:hover {
+.btn-fancy:hover {
+  color: rgb(255, 255, 255);
   filter: brightness(1.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  font: bolder;
 }
