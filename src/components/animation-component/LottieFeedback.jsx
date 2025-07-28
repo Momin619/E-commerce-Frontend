@@ -20,6 +20,10 @@ function LottieFeedback({ type }) {
     animationUrl = "/animations/success.json";
     content = "Login successful!";
   }
+  if (type === "remove-favourite") {
+    animationUrl = "/animations/exploding heart.json";
+    content = "Removed from favourites successfully!";
+  }
 
   if (!animationUrl) return null;
 
@@ -32,7 +36,7 @@ function LottieFeedback({ type }) {
         src={animationUrl}
         style={{ width: 200, height: 200 }}
       />
-      <p className="mt-6 text-2xl font-semibold text-center text-gray-800">
+      <p className="mt-0 text-2xl font-semibold text-center text-gray-800">
         {content}
       </p>
     </div>
