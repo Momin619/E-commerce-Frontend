@@ -77,12 +77,12 @@ function SignUp() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 px-4 sm:px-6 py-10">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-200 px-4 sm:px-6 py-10">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md sm:max-w-lg bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl space-y-5 transition-all duration-300"
       >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 text-center mb-3 sm:mb-4">
+        <h2 className="text-center text-2xl sm:text-3xl lg:text-4xl text-gray-800 mb-4">
           Create an Account
         </h2>
 
