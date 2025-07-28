@@ -40,7 +40,7 @@ function Login() {
       setUser(user);
       setIsLoggedIn(response.data.isLoggedIn);
       const { redirectTo } = response.data;
-      setAction("signup");
+      setAction("login");
       setShowAnimation(true);
       setLoading(false);
 

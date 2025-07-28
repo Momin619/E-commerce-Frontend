@@ -359,9 +359,6 @@
   .h-64 {
     height: calc(var(--spacing) * 64);
   }
-  .h-\[400px\] {
-    height: 400px;
-  }
   .h-full {
     height: 100%;
   }
@@ -397,9 +394,6 @@
   }
   .w-\[95\%\] {
     width: 95%;
-  }
-  .w-\[400px\] {
-    width: 400px;
   }
   .w-fit {
     width: fit-content;
@@ -963,11 +957,6 @@
       height: calc(var(--spacing) * 80);
     }
   }
-  .sm\:h-\[500px\] {
-    @media (width >= 40rem) {
-      height: 500px;
-    }
-  }
   .sm\:w-32 {
     @media (width >= 40rem) {
       width: calc(var(--spacing) * 32);
@@ -981,11 +970,6 @@
   .sm\:w-\[90\%\] {
     @media (width >= 40rem) {
       width: 90%;
-    }
-  }
-  .sm\:w-\[500px\] {
-    @media (width >= 40rem) {
-      width: 500px;
     }
   }
   .sm\:w-auto {
