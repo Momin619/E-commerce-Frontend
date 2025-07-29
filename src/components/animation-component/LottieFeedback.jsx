@@ -1,6 +1,6 @@
 import { Player } from "@lottiefiles/react-lottie-player";
 
-function LottieFeedback({ type, width = 200, height = 200 }) {
+function LottieFeedback({ type, width = 200, height = 200, loop = false }) {
   // Logic separated into a function
   const animationFilter = (type) => {
     switch (type) {
@@ -58,6 +58,12 @@ function LottieFeedback({ type, width = 200, height = 200 }) {
 
           scale: 1,
         };
+      case "404-error":
+        return {
+          animationUrl: "/animations/404-error.json",
+
+          scale: 1,
+        };
 
       default:
         return {
@@ -98,7 +104,7 @@ function LottieFeedback({ type, width = 200, height = 200 }) {
           >
             <Player
               autoplay
-              loop={false}
+              loop={loop}
               keepLastFrame
               src={animationUrl}
               style={{

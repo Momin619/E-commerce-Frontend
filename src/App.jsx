@@ -17,7 +17,7 @@ import {
 // ui components
 
 import Navbar from "./components/ui/Navbar";
-import Profile from "./components/ui/Profile";
+import Profile from "./components/user-components/Profile";
 import Cart from "./components/ui/Cart";
 import Error from "./components/error-component/Error";
 // host components
