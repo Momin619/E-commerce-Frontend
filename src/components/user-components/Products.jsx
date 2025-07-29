@@ -91,17 +91,17 @@ function Products() {
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         <div className="p-6">
-          <h2 className="text-3xl font-bold mb-6 text-center">Your Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <h2 className="mb-6 text-3xl font-bold text-center">Your Products</h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {products.length === 0 ? (
-              <p className="col-span-full text-center text-gray-500">
+              <p className="text-center text-gray-500 col-span-full">
                 No products available.
               </p>
             ) : (
               products.map((product) => (
                 <div
                   key={product._id}
-                  className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition duration-300 h-full flex flex-col"
+                  className="flex flex-col h-full overflow-hidden transition duration-300 bg-white shadow-md rounded-2xl hover:shadow-xl"
                 >
                   {product.productImage ? (
                     <img
@@ -109,17 +109,17 @@ function Products() {
                         product.productImage?.startsWith("/") ? "" : "/"
                       }${product.productImage}`}
                       alt={product.productName}
-                      className="w-full h-48 object-cover"
+                      className="object-cover w-full h-48"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
+                    <div className="flex items-center justify-center w-full h-48 text-gray-500 bg-gray-200">
                       No Image
                     </div>
                   )}
 
-                  <div className="p-4 flex flex-col flex-grow">
-                    <h3 className="text-xl font-semibold mb-2">
+                  <div className="flex flex-col flex-grow p-4">
+                    <h3 className="mb-2 text-xl font-semibold">
                       {product.productName}
                     </h3>
                     <p className="text-gray-700 min-h-[60px]">
@@ -128,28 +128,28 @@ function Products() {
                       ...
                     </p>
 
-                    <div className="mt-auto flex flex-col gap-3">
-                      <span className="text-green-600 font-bold text-xl text-left">
+                    <div className="flex flex-col gap-3 mt-auto">
+                      <span className="text-xl font-bold text-left text-green-600">
                         ${product.productPrice}
                       </span>
 
                       <div className="flex flex-wrap gap-3">
                         <a
-                          className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700"
+                          className="px-5 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
                           href={`/product-detail/product/${product._id}`}
                         >
                           Details
                         </a>
 
                         <button
-                          className="bg-red-600 cursor-pointer text-white px-5 py-2 rounded-md hover:bg-red-700"
+                          className="px-5 py-2 text-white bg-red-600 rounded-md cursor-pointer hover:bg-red-700"
                           onClick={() => handleAddFavouriteProduct(product._id)}
                         >
                           Favourites
                         </button>
 
                         <button
-                          className="bg-green-600 cursor-pointer text-white px-5 py-2 rounded-md hover:bg-green-700"
+                          className="px-5 py-2 text-white bg-green-600 rounded-md cursor-pointer hover:bg-green-700"
                           onClick={() => handleAddToCart(product._id)}
                         >
                           Add to Cart

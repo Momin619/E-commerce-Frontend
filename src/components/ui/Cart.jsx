@@ -3,9 +3,14 @@ import api from "../../api/api";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Loading from "../loading-component/Loading";
 import CheckoutButton from "../stripe-components/CheckoutButton";
+import LottieFeedback from "../animation-component/LottieFeedback";
+import { motion, AnimatePresence } from "framer-motion";
+
 function Cart() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [action, setAction] = useState("1");
+  const [showAnimation, setShowAnimation] = useState(false);
   console.log(cart);
   const fetchCart = async () => {
     setLoading(true);
@@ -42,8 +47,16 @@ function Cart() {
 
   const removeFromCart = async (id) => {
     try {
+      console.log("Called remove from cart handler");
       await api.post(`/remove-from-cart/item/${id}`);
-      fetchCart();
+      setAction("remove-from-cart");
+      setShowAnimation(true);
+
+      // Wait 2 seconds before fetching cart and hiding animation
+      setTimeout(() => {
+        fetchCart();
+        setShowAnimation(false);
+      }, 2630); // 2 seconds delay
     } catch (err) {
       console.error("Remove failed", err);
     }
@@ -52,6 +65,17 @@ function Cart() {
   useEffect(() => {
     fetchCart();
   }, []);
+  const [showEmptyAnimation, setShowEmptyAnimation] = useState(true);
+
+  useEffect(() => {
+    if (cart.length === 0) {
+      setShowEmptyAnimation(true);
+      const timer = setTimeout(() => {
+        setShowEmptyAnimation(false);
+      }, 2600); // Hide animation after 2.5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [cart]);
 
   if (loading) return <Loading />;
 
@@ -62,76 +86,105 @@ function Cart() {
   );
 
   return (
-    <div className="p-4 sm:p-6 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-center mb-6">🛒 Your Cart</h2>
+    <>
+      {showAnimation && action && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+          <LottieFeedback type={action} />
+        </div>
+      )}
+      <div className="max-w-4xl p-4 mx-auto sm:p-6">
+        <h2 className="mb-6 text-3xl font-bold text-center"> Cart</h2>
 
-      {cart.length === 0 ? (
-        <p className="text-center text-gray-600">Your cart is empty.</p>
-      ) : (
-        <>
-          {cart.map((item) => {
-            const product = item.productId;
-            return (
-              <div
-                key={product._id}
-                className="flex flex-col sm:flex-row gap-4 sm:items-center border-b py-4"
-              >
-                <div className="w-full sm:w-32 h-32 flex-shrink-0 overflow-hidden rounded bg-gray-100">
-                  <img
-                    src={`https://e-commerce-backend-production-abe1.up.railway.app${product.productImage}`}
-                    alt={product.productName}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+        {cart.length === 0 ? (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={showEmptyAnimation ? "animation" : "button"}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className={`flex flex-col items-center justify-center gap-8 ${
+                showEmptyAnimation ? "mt-30" : "mt-0"
+              }`}
+            >
+              {showEmptyAnimation ? (
+                <LottieFeedback type="empty-cart" width={250} height={250} />
+              ) : (
+                <a
+                  href="/products"
+                  className="px-6 py-2 text-white bg-green-500 rounded hover:bg-green-600"
+                >
+                  Go to Shopping
+                </a>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        ) : (
+          <>
+            {cart.map((item) => {
+              const product = item.productId;
+              return (
+                <div
+                  key={product._id}
+                  className="flex flex-col gap-4 py-4 border-b sm:flex-row sm:items-center"
+                >
+                  <div className="flex-shrink-0 w-full h-32 overflow-hidden bg-gray-100 rounded sm:w-32">
+                    <img
+                      src={`https://e-commerce-backend-production-abe1.up.railway.app${product.productImage}`}
+                      alt={product.productName}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
 
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold">
-                    {product.productName}
-                  </h3>
-                  <p className="text-gray-600">
-                    Price: ${product.productPrice || 0}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <button
-                      className="p-1 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer"
-                      onClick={() => decreaseQuantity(product._id)}
-                      title="Decrease quantity"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </button>
-                    <span className="font-semibold">{item.quantity}</span>
-                    <button
-                      className="p-1 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer"
-                      onClick={() => increaseQuantity(product._id)}
-                      title="Increase quantity"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                    <button
-                      className="p-1 bg-red-500 hover:bg-red-600 text-white rounded cursor-pointer ml-2"
-                      onClick={() => removeFromCart(product._id)}
-                      title="Remove item"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold">
+                      {product.productName}
+                    </h3>
+                    <p className="text-gray-600">
+                      Price: ${product.productPrice || 0}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <button
+                        className="p-1 bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
+                        onClick={() => decreaseQuantity(product._id)}
+                        title="Decrease quantity"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="font-semibold">{item.quantity}</span>
+                      <button
+                        className="p-1 bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
+                        onClick={() => increaseQuantity(product._id)}
+                        title="Increase quantity"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                      <button
+                        className="p-1 ml-2 text-white bg-red-500 rounded cursor-pointer hover:bg-red-600"
+                        onClick={() => removeFromCart(product._id)}
+                        title="Remove item"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="font-semibold text-right sm:text-left">
+                    ${(product.productPrice || 0) * item.quantity}
                   </div>
                 </div>
+              );
+            })}
 
-                <div className="font-semibold text-right sm:text-left">
-                  ${(product.productPrice || 0) * item.quantity}
-                </div>
-              </div>
-            );
-          })}
-
-          {/* Total Amount */}
-          <div className="text-right mt-6">
-            <h3 className="text-2xl font-bold">Total: ${total.toFixed(2)}</h3>
-            {<CheckoutButton cartItems={cart} setLoading={setLoading} />}
-          </div>
-        </>
-      )}
-    </div>
+            {/* Total Amount */}
+            <div className="mt-6 text-right">
+              <h3 className="text-2xl font-bold">Total: ${total.toFixed(2)}</h3>
+              {<CheckoutButton cartItems={cart} setLoading={setLoading} />}
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

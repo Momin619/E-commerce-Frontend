@@ -1,26 +1,24 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../api/api";
 import Loading from "../loading-component/Loading";
 import LottieFeedback from "../animation-component/LottieFeedback";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+
 function Favourites() {
   const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(null);
   const [action, setAction] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
   const redirect = useNavigate();
+
   const fetchFavouriteProducts = async () => {
     setLoading(true);
     try {
       const response = await api.get("/favourites");
-      // console.log("Response is ", response);
-      // setFavourites);
       const favourites = response.data.user.favourites;
-      // if(favourites)
       const filteredFavourites = favourites.filter((fav) => fav._id !== null);
-      console.log(filteredFavourites);
-      setFavourites(favourites);
+      setFavourites(filteredFavourites);
     } catch (error) {
       console.log(error);
     } finally {
@@ -52,18 +50,45 @@ function Favourites() {
   };
 
   if (loading) return <Loading />;
+
   return (
     <>
-      {showAnimation && action && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
-          <LottieFeedback type={action} />
-        </div>
-      )}
-      <div className="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 md:grid-cols-3">
+      {/* Lottie Animation Overlay */}
+      <AnimatePresence>
+        {showAnimation && action && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm"
+          >
+            <LottieFeedback type={action} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Favourite Cards */}
+      <motion.div
+        className="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 md:grid-cols-3"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 },
+          },
+        }}
+      >
         {favourites.map((favourite) => (
-          <div
+          <motion.div
             key={favourite._id}
-            className="overflow-hidden transition duration-300 bg-white shadow-md rounded-xl hover:shadow-lg"
+            layout
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden bg-white shadow-md rounded-xl"
           >
             {/* Image */}
             <div className="h-48 overflow-hidden bg-gray-100">
@@ -88,16 +113,17 @@ function Favourites() {
               <p className="text-lg font-bold text-blue-600">
                 ${favourite.productPrice}
               </p>
-              <button
+              <motion.button
                 onClick={() => handleRemoveFavourite(favourite._id)}
+                whileTap={{ scale: 0.9 }}
                 className="px-4 py-2 mt-4 text-white transition bg-red-500 rounded cursor-pointer hover:bg-red-600"
               >
                 Remove from Favourites
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </>
   );
 }

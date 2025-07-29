@@ -1,5 +1,6 @@
 import api from "../../api/api";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 function Profile() {
   const [profile, setProfile] = useState({});
@@ -19,29 +20,64 @@ function Profile() {
   }, []);
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="max-w-xl p-6 mx-auto mt-10 bg-white shadow-lg rounded-2xl"
+    >
       <div className="flex flex-col items-center text-center">
-        <div className="w-24 h-24 bg-indigo-100 text-indigo-600 flex items-center justify-center rounded-full text-3xl font-bold">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 120 }}
+          className="flex items-center justify-center w-24 h-24 text-3xl font-bold text-indigo-600 bg-indigo-100 rounded-full"
+        >
           {profile.firstName?.[0]}
           {profile.lastName?.[0]}
-        </div>
-        <h2 className="mt-4 text-2xl font-semibold text-gray-800">
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-4 text-2xl font-semibold text-gray-800"
+        >
           {profile.firstName} {profile.lastName}
-        </h2>
-        <p className="text-gray-500 capitalize">{profile.userType}</p>
-        <div className="mt-4 space-y-1 text-sm text-gray-600">
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-gray-500 capitalize"
+        >
+          {profile.userType}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-4 space-y-1 text-sm text-gray-600"
+        >
           <p>
             <strong>Email:</strong> {profile.email}
           </p>
           <p>
             <strong>User ID:</strong> {profile._id}
           </p>
-        </div>
-        <button className="mt-6 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+        </motion.div>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-4 py-2 mt-6 text-white bg-indigo-600 rounded hover:bg-indigo-700"
+        >
           Edit Profile
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
