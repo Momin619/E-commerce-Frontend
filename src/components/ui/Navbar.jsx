@@ -124,10 +124,11 @@ function Navbar() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div
-              className="text-xl font-bold text-blue-600 cursor-pointer"
+              className="text-xl font-bold cursor-pointer"
               onClick={() => navigate("/")}
             >
-              E-commerce
+              <span style={{ color: "#2F3F4D" }}>Cart</span>
+              <span style={{ color: "#0497FF" }}>Plus</span>
             </div>
 
             {/* Desktop Menu */}
