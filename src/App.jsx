@@ -61,7 +61,7 @@ function App() {
     }
   }, []); // only once on app load
 
-  if (loading) return <div className="p-10 text-center">Loading...</div>;
+  if (loading) return <div className="p-10 text-center"></div>;
 
   return (
     <>
