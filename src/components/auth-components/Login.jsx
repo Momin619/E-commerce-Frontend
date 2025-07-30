@@ -64,62 +64,66 @@ function Login() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full h-screen overflow-auto bg-gradient-to-br from-gray-100 to-gray-200"
+        className="flex flex-col items-center justify-center min-h-screen px-4 py-8 bg-gradient-to-br from-gray-100 to-gray-200"
       >
-        <div className="flex items-center justify-center min-h-screen px-4 py-10">
-          <div className="w-full max-w-md p-6 bg-white shadow-xl rounded-2xl">
-            <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
-              Login
-            </h2>
+        {/* FORM */}
+        <div className="w-full sm:w-[80%] max-w-md bg-white p-6 rounded-2xl shadow-xl">
+          <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
+            Login
+          </h2>
 
-            <ValidationErrors errors={errors} />
+          <ValidationErrors errors={errors} />
 
-            <form className="space-y-5" onSubmit={handleOnSubmit}>
-              <div>
-                <Label htmlFor="email">Email</Label>
+          <form className="space-y-5" onSubmit={handleOnSubmit}>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={handleOnChange}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
                 <Input
-                  id="email"
-                  name="email"
-                  type="email"
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
                   required
-                  value={formData.email}
+                  value={formData.password}
                   onChange={handleOnChange}
+                  className="pr-10"
                 />
+                <span
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute text-gray-500 transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
+                >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </span>
               </div>
+            </div>
 
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    required
-                    value={formData.password}
-                    onChange={handleOnChange}
-                    className="pr-10"
-                  />
-                  <span
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    className="absolute text-gray-500 transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
-                  >
-                    {showPassword ? <FiEyeOff /> : <FiEye />}
-                  </span>
-                </div>
-              </div>
+            <Button type="submit" className="w-full btn-fancy">
+              Login
+            </Button>
 
-              <Button type="submit" className="w-full btn-fancy">
-                Login
-              </Button>
+            <p className="text-sm text-center text-gray-600">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-blue-600 hover:underline">
+                Sign up
+              </Link>
+            </p>
+          </form>
+        </div>
 
-              <p className="text-sm text-center text-gray-600">
-                Don't have an account?{" "}
-                <Link to="/signup" className="text-blue-600 hover:underline">
-                  Sign up
-                </Link>
-              </p>
-            </form>
-          </div>
+        {/* EXTRA CONTENT BELOW FORM */}
+        <div className="mt-8 text-sm text-center text-gray-500">
+          © 2025 CartPlus. All rights reserved.
         </div>
       </motion.div>
     </>
