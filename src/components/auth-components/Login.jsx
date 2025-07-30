@@ -109,7 +109,7 @@ function Login() {
             </div>
 
             <Button type="submit" className="btn-fancy">
-              Login1
+              Login
             </Button>
 
             <p className="text-sm text-center text-gray-600">
