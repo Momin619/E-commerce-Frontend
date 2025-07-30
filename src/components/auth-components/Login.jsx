@@ -1,4 +1,3 @@
-// Login.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -65,60 +64,62 @@ function Login() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center justify-center min-h-screen px-4 bg-gradient-to-br from-gray-100 to-gray-200"
+        className="w-full h-screen overflow-auto bg-gradient-to-br from-gray-100 to-gray-200"
       >
-        <div className="w-full max-w-md p-6 bg-white shadow-xl rounded-2xl overflow-y-auto max-h-[95vh]">
-          <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
-            Login
-          </h2>
-
-          <ValidationErrors errors={errors} />
-
-          <form className="space-y-5" onSubmit={handleOnSubmit}>
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={handleOnChange}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={formData.password}
-                  onChange={handleOnChange}
-                  className="pr-10"
-                />
-                <span
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute text-gray-500 transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
-                >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
-                </span>
-              </div>
-            </div>
-
-            <Button type="submit" className="btn-fancy">
+        <div className="flex items-center justify-center min-h-screen px-4 py-10">
+          <div className="w-full max-w-md p-6 bg-white shadow-xl rounded-2xl">
+            <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
               Login
-            </Button>
+            </h2>
 
-            <p className="text-sm text-center text-gray-600">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-600 hover:underline">
-                Sign up
-              </Link>
-            </p>
-          </form>
+            <ValidationErrors errors={errors} />
+
+            <form className="space-y-5" onSubmit={handleOnSubmit}>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={handleOnChange}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={formData.password}
+                    onChange={handleOnChange}
+                    className="pr-10"
+                  />
+                  <span
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute text-gray-500 transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
+                  >
+                    {showPassword ? <FiEyeOff /> : <FiEye />}
+                  </span>
+                </div>
+              </div>
+
+              <Button type="submit" className="w-full btn-fancy">
+                Login
+              </Button>
+
+              <p className="text-sm text-center text-gray-600">
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-blue-600 hover:underline">
+                  Sign up
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
       </motion.div>
     </>
