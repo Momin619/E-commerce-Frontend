@@ -16,7 +16,7 @@ import Navbar from "./components/ui/Navbar";
 import SignUp from "./components/auth-components/SignUp";
 import Login from "./components/auth-components/Login";
 import Profile from "./components/user-components/Profile";
-import Cart from "./components/ui/Cart";
+import Cart from "./components/user-components/Cart";
 import Error from "./components/error-component/Error";
 import AddProduct from "./components/host-components/AddProduct";
 import HostProducts from "./components/host-components/HostProducts";

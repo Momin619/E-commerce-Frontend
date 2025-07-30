@@ -39,6 +39,7 @@
     --container-md: 28rem;
     --container-lg: 32rem;
     --container-xl: 36rem;
+    --container-2xl: 42rem;
     --container-4xl: 56rem;
     --container-7xl: 80rem;
     --text-sm: 0.875rem;
@@ -705,9 +706,6 @@
   .py-10 {
     padding-block: calc(var(--spacing) * 10);
   }
-  .py-12 {
-    padding-block: calc(var(--spacing) * 12);
-  }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
   }
@@ -968,11 +966,6 @@
       width: calc(var(--spacing) * 32);
     }
   }
-  .sm\:w-\[80\%\] {
-    @media (width >= 40rem) {
-      width: 80%;
-    }
-  }
   .sm\:w-\[85\%\] {
     @media (width >= 40rem) {
       width: 85%;
@@ -991,6 +984,11 @@
   .sm\:max-w-lg {
     @media (width >= 40rem) {
       max-width: var(--container-lg);
+    }
+  }
+  .sm\:max-w-md {
+    @media (width >= 40rem) {
+      max-width: var(--container-md);
     }
   }
   .sm\:grid-cols-2 {
@@ -1095,6 +1093,11 @@
       width: 85%;
     }
   }
+  .md\:max-w-lg {
+    @media (width >= 48rem) {
+      max-width: var(--container-lg);
+    }
+  }
   .md\:grid-cols-2 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1130,6 +1133,11 @@
       width: 80%;
     }
   }
+  .lg\:max-w-xl {
+    @media (width >= 64rem) {
+      max-width: var(--container-xl);
+    }
+  }
   .lg\:grid-cols-4 {
     @media (width >= 64rem) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1149,6 +1157,11 @@
   .xl\:w-\[75\%\] {
     @media (width >= 80rem) {
       width: 75%;
+    }
+  }
+  .xl\:max-w-2xl {
+    @media (width >= 80rem) {
+      max-width: var(--container-2xl);
     }
   }
 }

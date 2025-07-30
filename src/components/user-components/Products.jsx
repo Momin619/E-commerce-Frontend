@@ -58,6 +58,7 @@ function Products() {
       // Post to cart with full product info
       const res = await api.post(`/add-to-cart/cart-item/${id}`, {
         productId: id,
+        quantity: 1,
       });
       setShowAnimation(true);
       setAction("cart");

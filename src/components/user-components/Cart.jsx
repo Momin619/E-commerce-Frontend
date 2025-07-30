@@ -140,6 +140,9 @@ function Cart() {
                     <h3 className="text-lg font-semibold">
                       {product.productName}
                     </h3>
+                    <h3 className="text-lg font-semibold">
+                      Stock : {product.productStock}
+                    </h3>
                     <p className="text-gray-600">
                       Price: ${product.productPrice || 0}
                     </p>
