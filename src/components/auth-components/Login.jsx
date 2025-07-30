@@ -64,9 +64,9 @@ function Login() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-br from-gray-100 to-gray-200"
+        className="flex items-center justify-center min-h-screen px-4 bg-gradient-to-br from-gray-100 to-gray-200"
       >
-        <div className="w-full sm:w-[80%] max-w-md bg-white p-6 rounded-2xl shadow-xl">
+        <div className="w-full max-w-md p-6 bg-white shadow-xl rounded-2xl sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
           <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
             Login
           </h2>
@@ -74,6 +74,7 @@ function Login() {
           <ValidationErrors errors={errors} />
 
           <form className="space-y-5" onSubmit={handleOnSubmit}>
+            {/* Email */}
             <div>
               <Label htmlFor="email">Email</Label>
               <Input
@@ -86,6 +87,7 @@ function Login() {
               />
             </div>
 
+            {/* Password */}
             <div>
               <Label htmlFor="password">Password</Label>
               <div className="relative">
@@ -107,10 +109,12 @@ function Login() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full btn-fancy">
+            {/* Button */}
+            <Button type="submit" className="btn-fancy">
               Login
             </Button>
 
+            {/* Link */}
             <p className="text-sm text-center text-gray-600">
               Don't have an account?{" "}
               <Link to="/signup" className="text-blue-600 hover:underline">
@@ -118,11 +122,6 @@ function Login() {
               </Link>
             </p>
           </form>
-        </div>
-
-        {/* Footer now sits below the form */}
-        <div className="mt-6 text-sm text-center text-gray-500">
-          © 2025 CartPlus. All rights reserved.
         </div>
       </motion.div>
     </>
