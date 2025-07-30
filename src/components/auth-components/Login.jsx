@@ -64,7 +64,7 @@ function Login() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-br from-gray-100 to-gray-200"
+        className="flex flex-col items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-br from-gray-100 to-gray-200"
       >
         <div className="w-full sm:w-[80%] max-w-md bg-white p-6 rounded-2xl shadow-xl">
           <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
@@ -120,8 +120,8 @@ function Login() {
           </form>
         </div>
 
-        {/* EXTRA CONTENT BELOW FORM */}
-        <div className="mt-8 text-sm text-center text-gray-500">
+        {/* Footer now sits below the form */}
+        <div className="mt-6 text-sm text-center text-gray-500">
           © 2025 CartPlus. All rights reserved.
         </div>
       </motion.div>
