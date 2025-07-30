@@ -65,9 +65,9 @@ function Login() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center justify-center h-screen px-4 bg-gradient-to-br from-gray-100 to-gray-200"
+        className="flex items-center justify-center min-h-screen px-4 bg-gradient-to-br from-gray-100 to-gray-200"
       >
-        <div className="w-full max-w-md p-6 bg-white shadow-xl rounded-2xl sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl overflow-y-auto max-h-[95vh]">
+        <div className="w-full max-w-md p-6 bg-white shadow-xl rounded-2xl overflow-y-auto max-h-[95vh]">
           <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
             Login
           </h2>

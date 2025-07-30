@@ -376,6 +376,9 @@
   .h-screen {
     height: 100vh;
   }
+  .max-h-\[95vh\] {
+    max-height: 95vh;
+  }
   .min-h-\[60px\] {
     min-height: 60px;
   }
@@ -533,6 +536,9 @@
   }
   .overflow-hidden {
     overflow: hidden;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .rounded {
     border-radius: 0.25rem;
