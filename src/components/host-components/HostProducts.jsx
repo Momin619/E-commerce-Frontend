@@ -109,14 +109,14 @@ function HostProducts() {
 
                     <div className="flex gap-3 w-full sm:w-auto justify-center sm:justify-end">
                       <a
-                        className="bg-blue-600 text-white px-5 py-2 rounded-md cursor-pointer hover:bg-blue-700"
+                        className="bg-blue-600 text-white px-5 py-2 rounded-md button hover:bg-blue-700"
                         href={`/host/edit-product/product/${product._id}`}
                       >
                         Edit
                       </a>
                       <button
                         onClick={() => handleDelete(product._id)}
-                        className="bg-red-600 cursor-pointer text-white px-5 py-2 rounded-md hover:bg-red-700"
+                        className="bg-red-600 button text-white px-5 py-2 rounded-md hover:bg-red-700"
                       >
                         Delete
                       </button>

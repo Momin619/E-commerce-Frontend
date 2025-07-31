@@ -102,7 +102,7 @@ function Login() {
                 />
                 <span
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute text-gray-500 transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
+                  className="absolute text-gray-500 transform -translate-y-1/2 button top-1/2 right-3"
                 >
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </span>

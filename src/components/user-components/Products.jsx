@@ -1,25 +1,29 @@
 import api from "../../api/api";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Loading from "../loading-component/Loading";
 import { motion } from "framer-motion";
 import LottieFeedback from "../animation-component/LottieFeedback";
-import { Link } from "react-router-dom";
+import Filter from "../user-components/Filter";
+
 function Products() {
-  const redirect = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(null);
-  const [action, setAction] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [action, setAction] = useState(null);
   const [showAnimation, setShowAnimation] = useState(false);
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await api.get("/products");
-      const products = response.data.products;
-      setProducts(products);
+      const response = await api.get(`/products${location.search}`);
+      const fetchedProducts = response?.data?.products ?? [];
+      setProducts(fetchedProducts);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to fetch products:", error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -27,47 +31,32 @@ function Products() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [location.search]);
 
   const handleAddFavouriteProduct = async (id) => {
     setLoading(true);
     try {
-      const response = await api.post(`/favourite-product/product/${id}`);
-      setShowAnimation(true);
+      await api.post(`/favourite-product/product/${id}`);
       setAction("favourite");
-
-      setTimeout(() => {
-        redirect("/favourites"); // redirect after showing message
-      }, 3100);
-
-      return response;
+      setShowAnimation(true);
+      setTimeout(() => navigate("/favourites"), 3000);
     } catch (error) {
-      console.log(error);
+      console.error("Error adding to favourites:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleAddToCart = async (id) => {
-    console.log("Product ids from handle add to cart is ", id);
+    setLoading(true);
     try {
-      setLoading(true);
-
-      // Get product list and find product by id
-
-      // Post to cart with full product info
-      const res = await api.post(`/add-to-cart/cart-item/${id}`, {
+      await api.post(`/add-to-cart/cart-item/${id}`, {
         productId: id,
         quantity: 1,
       });
-      setShowAnimation(true);
       setAction("cart");
-
-      setTimeout(() => {
-        redirect("/cart"); // redirect after showing message
-      }, 1600);
-
-      return res;
+      setShowAnimation(true);
+      setTimeout(() => navigate("/cart"), 1600);
     } catch (error) {
       console.error("Failed to add to cart:", error);
       alert("Failed to add to cart.");
@@ -77,7 +66,6 @@ function Products() {
   };
 
   if (loading) return <Loading />;
-
   return (
     <>
       {showAnimation && action && (
@@ -86,84 +74,90 @@ function Products() {
         </div>
       )}
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-      >
-        <div className="p-6">
-          <h2 className="mb-6 text-3xl font-bold text-center">Your Products</h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {products.length === 0 ? (
-              <p className="text-center text-gray-500 col-span-full">
-                No products available.
-              </p>
-            ) : (
-              products.map((product) => (
+      <div className="flex flex-col min-h-screen lg:flex-row">
+        {/* Sidebar Filter */}
+        <aside className="w-full lg:w-[280px] p-4    sticky top-24 self-start">
+          <Filter />
+        </aside>
+
+        {/* Product Grid */}
+        <motion.main
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex-grow px-6 py-8"
+        >
+          <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">
+            Your Products
+          </h2>
+
+          {products.length === 0 ? (
+            <p className="text-center text-gray-500">No products available.</p>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-items-center">
+              {products.map((product) => (
                 <div
                   key={product._id}
-                  className="flex flex-col h-full overflow-hidden transition duration-300 bg-white shadow-md rounded-2xl hover:shadow-xl"
+                  className="flex flex-col bg-white shadow rounded-2xl hover:shadow-md transition duration-300 w-full max-w-[280px] min-h-[460px] p-4"
                 >
+                  {/* Image */}
                   {product.productImage ? (
                     <img
                       src={`https://e-commerce-backend-production-abe1.up.railway.app${
-                        product.productImage?.startsWith("/") ? "" : "/"
+                        product.productImage.startsWith("/") ? "" : "/"
                       }${product.productImage}`}
                       alt={product.productName}
-                      className="object-cover w-full h-48"
+                      className="object-cover w-full h-48 rounded-t-2xl"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="flex items-center justify-center w-full h-48 text-gray-500 bg-gray-200">
+                    <div className="flex items-center justify-center h-48 text-gray-400 bg-gray-100 rounded-t-2xl">
                       No Image
                     </div>
                   )}
 
-                  <div className="flex flex-col flex-grow p-4">
-                    <h3 className="mb-2 text-xl font-semibold">
+                  {/* Info */}
+                  <div className="flex flex-col flex-grow p-2">
+                    <h3 className="mb-1 text-lg font-semibold">
                       {product.productName}
                     </h3>
-                    <p className="text-gray-700 min-h-[60px]">
-                      {product.productDescription?.slice(0, 100) ||
+                    <p className="text-sm text-gray-600 flex-grow min-h-[60px] mb-2">
+                      {product.productDescription?.slice(0, 100) ??
                         "No description"}
                       ...
                     </p>
 
-                    <div className="flex flex-col gap-3 mt-auto">
-                      <span className="text-xl font-bold text-left text-green-600">
-                        ${product.productPrice}
-                      </span>
+                    <div className="mb-2 text-xl font-bold text-green-600">
+                      ${product.productPrice}
+                    </div>
 
-                      <div className="flex flex-wrap gap-3">
-                        <a
-                          className="px-5 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                          href={`/product-detail/product/${product._id}`}
-                        >
-                          Details
-                        </a>
-
-                        <button
-                          className="px-5 py-2 text-white bg-red-600 rounded-md cursor-pointer hover:bg-red-700"
-                          onClick={() => handleAddFavouriteProduct(product._id)}
-                        >
-                          Favourites
-                        </button>
-
-                        <button
-                          className="px-5 py-2 text-white bg-green-600 rounded-md cursor-pointer hover:bg-green-700"
-                          onClick={() => handleAddToCart(product._id)}
-                        >
-                          Add to Cart
-                        </button>
-                      </div>
+                    <div className="flex flex-wrap gap-2 mt-auto">
+                      <a
+                        href={`/product-detail/product/${product._id}`}
+                        className="px-3 py-2 text-sm text-white bg-blue-600 rounded-md button hover:bg-blue-700"
+                      >
+                        Details
+                      </a>
+                      <button
+                        onClick={() => handleAddFavouriteProduct(product._id)}
+                        className="px-3 py-2 text-sm text-white bg-red-600 rounded-md button hover:bg-red-700"
+                      >
+                        Favourite
+                      </button>
+                      <button
+                        onClick={() => handleAddToCart(product._id)}
+                        className="px-3 py-2 text-sm text-white bg-green-600 rounded-md hover:bg-green-700 button"
+                      >
+                        Add to Cart
+                      </button>
                     </div>
                   </div>
                 </div>
-              ))
-            )}
-          </div>
-        </div>
-      </motion.div>
+              ))}
+            </div>
+          )}
+        </motion.main>
+      </div>
     </>
   );
 }

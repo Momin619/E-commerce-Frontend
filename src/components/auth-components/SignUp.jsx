@@ -139,7 +139,7 @@ function SignUp() {
             />
             <span
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-[60%] transform -translate-y-1/2 text-gray-500 cursor-pointer"
+              className="absolute right-3 top-[60%] transform -translate-y-1/2 text-gray-500 button"
             >
               {showPassword ? <FiEyeOff /> : <FiEye />}
             </span>
@@ -159,7 +159,7 @@ function SignUp() {
             />
             <span
               onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute right-3 top-[60%] transform -translate-y-1/2 text-gray-500 cursor-pointer"
+              className="absolute right-3 top-[60%] transform -translate-y-1/2 text-gray-500 button"
             >
               {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
             </span>

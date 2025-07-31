@@ -148,7 +148,7 @@ function Cart() {
                     </p>
                     <div className="flex items-center gap-2 mt-2">
                       <button
-                        className="p-1 bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
+                        className="p-1 bg-gray-200 rounded button hover:bg-gray-300"
                         onClick={() => decreaseQuantity(product._id)}
                         title="Decrease quantity"
                       >
@@ -156,14 +156,14 @@ function Cart() {
                       </button>
                       <span className="font-semibold">{item.quantity}</span>
                       <button
-                        className="p-1 bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
+                        className="p-1 bg-gray-200 rounded button hover:bg-gray-300"
                         onClick={() => increaseQuantity(product._id)}
                         title="Increase quantity"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                       <button
-                        className="p-1 ml-2 text-white bg-red-500 rounded cursor-pointer hover:bg-red-600"
+                        className="p-1 ml-2 text-white bg-red-500 rounded button hover:bg-red-600"
                         onClick={() => removeFromCart(product._id)}
                         title="Remove item"
                       >

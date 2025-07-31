@@ -46,7 +46,7 @@ function CheckoutButton({ cartItems, setLoading }) {
 
   return (
     <button
-      className="bg-black cursor-pointer text-white px-4 py-2 rounded"
+      className="bg-black button text-white px-4 py-2 rounded"
       onClick={handleCheckout}
     >
       {paying ? "Paying..." : "Checkout"}

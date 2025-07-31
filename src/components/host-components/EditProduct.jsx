@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
 import SuccessMessage from "../ui/SuccessMessage";
+
 function EditProduct() {
   const [successMessageText, setSuccessMessageText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ function EditProduct() {
     productDescription: "",
     productPrice: "",
     productStock: "",
+    productCategory: "",
   });
   const [image, setImage] = useState(null);
 
@@ -31,6 +33,7 @@ function EditProduct() {
         productDescription: fetchedProduct.productDescription || "",
         productPrice: fetchedProduct.productPrice || "",
         productStock: fetchedProduct.productStock || "",
+        productCategory: fetchedProduct.productCategory || "",
       });
     } catch (error) {
       console.error("Fetch error:", error);
@@ -52,7 +55,6 @@ function EditProduct() {
     }));
   };
 
-  // Handle file selection
   const handleFileChange = (e) => {
     const { files } = e.target;
     if (files) {
@@ -68,6 +70,7 @@ function EditProduct() {
     submitData.append("productDescription", formData.productDescription);
     submitData.append("productPrice", formData.productPrice);
     submitData.append("productStock", formData.productStock);
+    submitData.append("productCategory", formData.productCategory);
 
     if (image) {
       submitData.append("image", image);
@@ -79,15 +82,12 @@ function EditProduct() {
       await api.put(`/host/edit-product/product/${id}`, submitData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          // Remove these:
-          // method: "PUT", <-- already set by axios.put
-          // credentails: "include" <-- typo + unnecessary
         },
-        withCredentials: true, // correct way to include cookies/session
+        withCredentials: true,
       });
-      setSuccessMessageText("Product Edited ");
+      setSuccessMessageText("Product Edited");
       setTimeout(() => {
-        navigate("/host/products"); // redirect after showing message
+        navigate("/host/products");
       }, 3100);
     } catch (err) {
       console.error("Update failed", err);
@@ -105,12 +105,9 @@ function EditProduct() {
         message={successMessageText}
         onClose={() => setSuccessMessageText("")}
         duration={3000}
-      ></SuccessMessage>
-      <div
-        className="bg-white px-4 py-6 sm:px-6 sm:py-8 md:px-10 md:py-10 rounded-2xl shadow-xl border mx-auto my-6
-                w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%]"
-      >
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-gray-800">
+      />
+      <div className="bg-white px-4 py-6 sm:px-6 sm:py-8 md:px-10 md:py-10 rounded-2xl shadow-xl border mx-auto my-6 w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%]">
+        <h2 className="mb-6 text-2xl font-bold text-center text-gray-800 sm:text-3xl">
           Edit Product
         </h2>
 
@@ -134,7 +131,7 @@ function EditProduct() {
               name="productName"
               value={formData.productName}
               required
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -153,7 +150,7 @@ function EditProduct() {
               value={formData.productDescription}
               required
               rows="3"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -172,7 +169,7 @@ function EditProduct() {
               name="productPrice"
               value={formData.productPrice}
               required
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -191,8 +188,33 @@ function EditProduct() {
               name="productStock"
               value={formData.productStock}
               required
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
+          </div>
+
+          {/* Product Category */}
+          <div>
+            <label
+              htmlFor="productCategory"
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Product Category
+            </label>
+            <select
+              name="productCategory"
+              id="productCategory"
+              value={formData.productCategory}
+              onChange={handleOnChange}
+              required
+              className="block w-full px-4 py-2 mt-1 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">-- Select Category --</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Food">Food</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
 
           {/* Product Image */}
@@ -209,14 +231,14 @@ function EditProduct() {
               id="image"
               onChange={handleFileChange}
               accept="image/*"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           {/* Show current image if exists */}
           {product?.imageUrl && (
             <div>
-              <p className="text-sm text-gray-600 mb-1">Current Image:</p>
+              <p className="mb-1 text-sm text-gray-600">Current Image:</p>
               <img
                 src={product.imageUrl}
                 alt="Product"
@@ -229,7 +251,7 @@ function EditProduct() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full cursor-pointer bg-blue-600 text-white font-medium py-2.5 rounded-md hover:bg-blue-700 transition duration-300 text-sm sm:text-base"
+            className="w-full bg-blue-600 text-white font-medium py-2.5 rounded-md hover:bg-blue-700 transition duration-300 text-sm sm:text-base button"
           >
             Edit Product
           </button>
