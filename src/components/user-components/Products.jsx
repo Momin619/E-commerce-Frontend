@@ -76,7 +76,7 @@ function Products() {
 
       <div className="flex flex-col min-h-screen lg:flex-row">
         {/* Sidebar Filter */}
-        <aside className="w-full lg:w-[280px] p-4    sticky top-24 self-start">
+        <aside className="w-full p-4 lg:w-[280px]">
           <Filter />
         </aside>
 

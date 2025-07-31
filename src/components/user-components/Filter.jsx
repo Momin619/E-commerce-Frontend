@@ -53,7 +53,7 @@ function Filter() {
   };
 
   return (
-    <div className="fixed top-1 p-6 bg-white rounded-2xl w-full lg:w-[260px]">
+    <div className="p-6 bg-white rounded-2xl w-full lg:w-[260px] shadow-md">
       <h2 className="mb-4 text-xl font-semibold text-center text-gray-800">
         Filters
       </h2>
