@@ -27,7 +27,7 @@ import Favourites from "./components/user-components/Favourites";
 import ConnectStripe from "./components/stripe-components/ConnectStripe";
 import SuccessPayment from "./components/stripe-components/SuccessPayment";
 import CancelPayment from "./components/stripe-components/CancelPayment";
-
+import Home from "./components/user-components/Home";
 function App() {
   const { setUser, setIsLoggedIn, isLogin } = useUser();
   const navigate = useNavigate();
@@ -76,6 +76,9 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/home/category" element={<Home />} />
+
         <Route
           path="/product-detail/product/:id"
           element={<ProductDetails />}

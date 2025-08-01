@@ -58,9 +58,7 @@ function ProductDetails() {
       <div className="w-full aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
         {product.productImage ? (
           <img
-            src={`https://e-commerce-backend-production-abe1.up.railway.app${
-              product.productImage?.startsWith("/") ? "" : "/"
-            }${product.productImage}`}
+            src={`${import.meta.env.VITE_API_URL}${product.productImage}`}
             alt={product.productName}
             className="object-cover w-full h-full"
             loading="lazy"

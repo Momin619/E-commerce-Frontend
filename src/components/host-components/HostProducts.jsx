@@ -63,36 +63,36 @@ function HostProducts() {
         duration={3000}
       ></SuccessMessage>
       <div className="p-6">
-        <h2 className="text-3xl font-bold mb-6 text-center">Your Products</h2>
+        <h2 className="mb-6 text-3xl font-bold text-center">Your Products</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.length === 0 ? (
-            <p className="col-span-full text-center text-gray-500">
+            <p className="text-center text-gray-500 col-span-full">
               No products available.
             </p>
           ) : (
             products.map((product) => (
               <div
                 key={product._id}
-                className="bg-white shadow-md rounded-2xl overflow-hidden  hover:shadow-xl transition duration-300 h-full flex flex-col"
+                className="flex flex-col h-full overflow-hidden transition duration-300 bg-white shadow-md rounded-2xl hover:shadow-xl"
               >
                 {product.productImage ? (
                   <img
-                    src={`https://e-commerce-backend-production-abe1.up.railway.app${
-                      product.productImage?.startsWith("/") ? "" : "/"
-                    }${product.productImage}`}
+                    src={`${import.meta.env.VITE_API_URL}${
+                      product.productImage
+                    }`}
                     alt={product.productName}
-                    className="w-full h-48 object-cover"
+                    className="object-cover w-full h-48"
                     loading="lazy"
                   />
                 ) : (
-                  <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
+                  <div className="flex items-center justify-center w-full h-48 text-gray-500 bg-gray-200">
                     No Image
                   </div>
                 )}
 
-                <div className="p-4 flex flex-col flex-grow">
-                  <h3 className="text-xl font-semibold mb-2">
+                <div className="flex flex-col flex-grow p-4">
+                  <h3 className="mb-2 text-xl font-semibold">
                     {product.productName}
                   </h3>
 
@@ -102,21 +102,21 @@ function HostProducts() {
                     ...
                   </p>
 
-                  <div className="mt-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex flex-col gap-3 mt-auto sm:flex-row sm:items-center sm:justify-between">
                     <span className="text-green-600 font-bold text-xl w-[80px] text-center">
                       ${product.productPrice}
                     </span>
 
-                    <div className="flex gap-3 w-full sm:w-auto justify-center sm:justify-end">
+                    <div className="flex justify-center w-full gap-3 sm:w-auto sm:justify-end">
                       <a
-                        className="bg-blue-600 text-white px-5 py-2 rounded-md button hover:bg-blue-700"
+                        className="px-5 py-2 text-white bg-blue-600 rounded-md button hover:bg-blue-700"
                         href={`/host/edit-product/product/${product._id}`}
                       >
                         Edit
                       </a>
                       <button
                         onClick={() => handleDelete(product._id)}
-                        className="bg-red-600 button text-white px-5 py-2 rounded-md hover:bg-red-700"
+                        className="px-5 py-2 text-white bg-red-600 rounded-md button hover:bg-red-700"
                       >
                         Delete
                       </button>

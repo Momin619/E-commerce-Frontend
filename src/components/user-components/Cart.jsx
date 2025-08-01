@@ -130,7 +130,9 @@ function Cart() {
                 >
                   <div className="flex-shrink-0 w-full h-32 overflow-hidden bg-gray-100 rounded sm:w-32">
                     <img
-                      src={`https://e-commerce-backend-production-abe1.up.railway.app${product.productImage}`}
+                      src={`${import.meta.env.VITE_API_URL}${
+                        product.productImage
+                      }`}
                       alt={product.productName}
                       className="object-cover w-full h-full"
                     />

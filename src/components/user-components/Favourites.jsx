@@ -93,9 +93,7 @@ function Favourites() {
             {/* Image */}
             <div className="h-48 overflow-hidden bg-gray-100">
               <img
-                src={`https://e-commerce-backend-production-abe1.up.railway.app${
-                  favourite.productImage?.startsWith("/") ? "" : "/"
-                }${favourite.productImage}`}
+                src={`${import.meta.env.VITE_API_URL}${favourite.productImage}`}
                 alt={favourite.productName}
                 className="object-cover w-full h-full"
                 loading="lazy"

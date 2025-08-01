@@ -37,7 +37,7 @@ function Login() {
       setLoading(false);
 
       setTimeout(() => {
-        navigate(response.data.redirectTo || "/products");
+        navigate(response.data.redirectTo);
       }, 1500);
     } catch (error) {
       setLoading(false);

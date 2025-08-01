@@ -29,6 +29,14 @@ function Navbar() {
   const renderUserLinks = (mobile = false) => (
     <>
       <a
+        href="/home"
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
+      >
+        Home
+      </a>
+      <a
         href="/products"
         className={`${
           mobile ? "block py-2" : ""
@@ -52,7 +60,15 @@ function Navbar() {
       >
         Profile
       </a>
-      <a href="/cart">Cart</a>
+      <a
+        href="/cart"
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
+      >
+        Cart
+      </a>
+
       <button
         onClick={onLogout}
         className={`${

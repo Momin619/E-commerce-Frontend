@@ -103,9 +103,9 @@ function Products() {
                   {/* Image */}
                   {product.productImage ? (
                     <img
-                      src={`https://e-commerce-backend-production-abe1.up.railway.app${
-                        product.productImage.startsWith("/") ? "" : "/"
-                      }${product.productImage}`}
+                      src={`${import.meta.env.VITE_API_URL}${
+                        product.productImage
+                      }`}
                       alt={product.productName}
                       className="object-cover w-full h-48 rounded-t-2xl"
                       loading="lazy"
