@@ -2,7 +2,7 @@ import api from "../../api/api";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
-
+import Footer from "../ui/Footer";
 function ProductDetails() {
   const [product, setProduct] = useState({});
   const [ownerName, setOwnerName] = useState("");
@@ -53,48 +53,51 @@ function ProductDetails() {
   if (loading) return <Loading />;
 
   return (
-    <div className="w-[90%] sm:w-[85%] md:w-[80%] mx-auto my-10 p-6 bg-white rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Image Container with fixed ratio */}
-      <div className="w-full aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
-        {product.productImage ? (
-          <img
-            src={`${import.meta.env.VITE_API_URL}${product.productImage}`}
-            alt={product.productName}
-            className="object-cover w-full h-full"
-            loading="lazy"
-          />
-        ) : (
-          <span className="text-gray-400">No Image</span>
-        )}
-      </div>
-
-      {/* Product Info Section */}
-      <div className="flex flex-col justify-between space-y-4 text-center md:text-left">
-        <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-          {product.productName}
-        </h2>
-
-        <div className="text-gray-600 text-sm max-h-[150px] overflow-auto leading-relaxed border p-3 rounded-md bg-gray-50">
-          {product.productDescription || "No description available."}
+    <>
+      <div className="w-[90%] sm:w-[85%] md:w-[80%] mx-auto my-10 p-6 bg-white rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Image Container with fixed ratio */}
+        <div className="w-full aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+          {product.productImage ? (
+            <img
+              src={`${import.meta.env.VITE_API_URL}${product.productImage}`}
+              alt={product.productName}
+              className="object-cover w-full h-full"
+              loading="lazy"
+            />
+          ) : (
+            <span className="text-gray-400">No Image</span>
+          )}
         </div>
 
-        <p className="font-medium text-gray-600">
-          <strong>Owner:</strong> {ownerName}
-        </p>
+        {/* Product Info Section */}
+        <div className="flex flex-col justify-between space-y-4 text-center md:text-left">
+          <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+            {product.productName}
+          </h2>
 
-        <p className="text-xl font-semibold text-blue-600 sm:text-2xl">
-          ${product.productPrice}
-        </p>
+          <div className="text-gray-600 text-sm max-h-[150px] overflow-auto leading-relaxed border p-3 rounded-md bg-gray-50">
+            {product.productDescription || "No description available."}
+          </div>
 
-        {/* Back to Products Button */}
-        <button
-          onClick={() => navigate("/products")}
-          className="w-full px-4 py-2 mt-4 font-semibold text-white transition bg-blue-600 rounded-md hover:bg-blue-700 button"
-        >
-          Back to Products
-        </button>
+          <p className="font-medium text-gray-600">
+            <strong>Owner:</strong> {ownerName}
+          </p>
+
+          <p className="text-xl font-semibold text-blue-600 sm:text-2xl">
+            ${product.productPrice}
+          </p>
+
+          {/* Back to Products Button */}
+          <button
+            onClick={() => navigate("/products")}
+            className="w-full px-4 py-2 mt-4 font-semibold text-white transition bg-blue-600 rounded-md hover:bg-blue-700 button"
+          >
+            Back to Products
+          </button>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

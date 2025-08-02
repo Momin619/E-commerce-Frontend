@@ -5,7 +5,7 @@ import Loading from "../loading-component/Loading";
 import CheckoutButton from "../stripe-components/CheckoutButton";
 import LottieFeedback from "../animation-component/LottieFeedback";
 import { motion, AnimatePresence } from "framer-motion";
-
+import Footer from "../ui/Footer";
 function Cart() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -84,16 +84,16 @@ function Cart() {
       sum + (item.productId?.productPrice || 0) * (item.quantity || 0),
     0
   );
-
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       {showAnimation && action && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
           <LottieFeedback type={action} />
         </div>
       )}
-      <div className="max-w-4xl p-4 mx-auto sm:p-6">
-        <h2 className="mb-6 text-3xl font-bold text-center"> Cart</h2>
+
+      <div className="flex-grow max-w-4xl p-4 mx-auto sm:p-6">
+        <h2 className="mb-6 text-3xl font-bold text-center">Cart</h2>
 
         {cart.length === 0 ? (
           <AnimatePresence mode="wait">
@@ -181,7 +181,6 @@ function Cart() {
               );
             })}
 
-            {/* Total Amount */}
             <div className="mt-6 text-right">
               <h3 className="text-2xl font-bold">Total: ${total.toFixed(2)}</h3>
               {<CheckoutButton cartItems={cart} setLoading={setLoading} />}
@@ -189,7 +188,9 @@ function Cart() {
           </>
         )}
       </div>
-    </>
+
+      <Footer />
+    </div>
   );
 }
 

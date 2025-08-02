@@ -3,7 +3,7 @@ import { useState } from "react";
 import SuccessMessage from "../ui/SuccessMessage";
 import { useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
-
+import Footer from "../ui/Footer";
 function AddProduct() {
   const navigate = useNavigate();
   const [successMessageText, setSuccessMessageText] = useState("");
@@ -190,6 +190,7 @@ function AddProduct() {
           </button>
         </form>
       </div>
+      <Footer />
     </>
   );
 }

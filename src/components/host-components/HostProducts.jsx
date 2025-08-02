@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../api/api";
 import Loading from "../loading-component/Loading";
 import SuccessMessage from "../ui/SuccessMessage";
+import Footer from "../ui/Footer";
 import { useNavigate } from "react-router-dom";
 function HostProducts() {
   const redirect = useNavigate();
@@ -128,6 +129,7 @@ function HostProducts() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

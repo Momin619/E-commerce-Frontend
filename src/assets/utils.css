@@ -28,3 +28,7 @@
 .button {
   cursor: pointer !important;
 }
+
+.filter {
+  transition: 1s all;
+}

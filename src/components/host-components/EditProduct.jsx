@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../loading-component/Loading";
 import SuccessMessage from "../ui/SuccessMessage";
-
+import Footer from "../ui/Footer";
 function EditProduct() {
   const [successMessageText, setSuccessMessageText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -257,6 +257,7 @@ function EditProduct() {
           </button>
         </form>
       </div>
+      <Footer />
     </>
   );
 }

@@ -5,7 +5,7 @@ import Loading from "../loading-component/Loading";
 import { motion } from "framer-motion";
 import LottieFeedback from "../animation-component/LottieFeedback";
 import Filter from "../user-components/Filter";
-
+import Footer from "../ui/Footer";
 function Products() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -158,6 +158,7 @@ function Products() {
           )}
         </motion.main>
       </div>
+      <Footer />
     </>
   );
 }

@@ -4,7 +4,7 @@ import Loading from "../loading-component/Loading";
 import LottieFeedback from "../animation-component/LottieFeedback";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-
+import Footer from "../ui/Footer";
 function Favourites() {
   const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(null);
@@ -52,8 +52,7 @@ function Favourites() {
   if (loading) return <Loading />;
 
   return (
-    <>
-      {/* Lottie Animation Overlay */}
+    <div className="flex flex-col min-h-screen">
       <AnimatePresence>
         {showAnimation && action && (
           <motion.div
@@ -67,9 +66,8 @@ function Favourites() {
         )}
       </AnimatePresence>
 
-      {/* Favourite Cards */}
       <motion.div
-        className="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 md:grid-cols-3"
+        className="grid flex-grow grid-cols-1 gap-6 p-4 sm:grid-cols-2 md:grid-cols-3"
         initial="hidden"
         animate="visible"
         variants={{
@@ -90,7 +88,6 @@ function Favourites() {
             transition={{ duration: 0.3 }}
             className="overflow-hidden bg-white shadow-md rounded-xl"
           >
-            {/* Image */}
             <div className="h-48 overflow-hidden bg-gray-100">
               <img
                 src={`${import.meta.env.VITE_API_URL}${favourite.productImage}`}
@@ -100,7 +97,6 @@ function Favourites() {
               />
             </div>
 
-            {/* Details */}
             <div className="p-4">
               <h2 className="mb-1 text-xl font-semibold text-gray-800">
                 {favourite.productName}
@@ -122,7 +118,9 @@ function Favourites() {
           </motion.div>
         ))}
       </motion.div>
-    </>
+
+      <Footer />
+    </div>
   );
 }
 
