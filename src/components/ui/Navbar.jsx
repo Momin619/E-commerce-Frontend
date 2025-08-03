@@ -108,6 +108,14 @@ function Navbar() {
       >
         Profile
       </a>
+      <a
+        href="/host/orders"
+        className={`${
+          mobile ? "block py-2" : ""
+        } text-gray-600 hover:text-blue-600`}
+      >
+        Orders
+      </a>
 
       {user?.userType === "host" && (
         <Link

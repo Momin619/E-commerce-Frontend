@@ -28,6 +28,7 @@ import ConnectStripe from "./components/stripe-components/ConnectStripe";
 import SuccessPayment from "./components/stripe-components/SuccessPayment";
 import CancelPayment from "./components/stripe-components/CancelPayment";
 import Home from "./components/user-components/Home";
+import Order from "./components/host-components/Order";
 function App() {
   const { setUser, setIsLoggedIn, isLogin } = useUser();
   const navigate = useNavigate();
@@ -88,6 +89,7 @@ function App() {
         {/* Host routes */}
         <Route path="/host/add-product" element={<AddProduct />} />
         <Route path="/host/products" element={<HostProducts />} />
+        <Route path="/host/orders" element={<Order />} />
         <Route
           path="/host/edit-product/product/:id"
           element={<EditProduct />}
